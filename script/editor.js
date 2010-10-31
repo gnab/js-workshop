@@ -20,7 +20,7 @@ $(document).ready(function() {
 });
 
 function setUpLog(editor) {
-  var log = $('#log')[0];
+  var log = $('#log');
 
   extendMethod(console, console.log, function(text) {
     appendToLog(log, text);
@@ -35,12 +35,27 @@ function setUpLog(editor) {
   });
 
   console.clear = function() {
-    log.innerHTML = '';
+    log[0].innerHTML = '';
     console.info('Press Shift + Enter to evaluate code ' +
       '(+ Control to clear log as well)');
   }
 
   console.clear();
+
+  var gutterView = editor.gutterView;
+  var _computeWidth = gutterView.computeWidth;
+  gutterView.computeWidth = function() {
+    var width = _computeWidth.apply(gutterView, arguments);
+
+    if (width !== editor._gutterViewWidth) {
+        log.css({
+          'border-left-width': width + 'px'
+        });
+    }
+
+    return width;
+  }
+
 }
 
 function extendMethod(obj, method, extra) {
@@ -55,8 +70,8 @@ function extendMethod(obj, method, extra) {
 }
 
 function appendToLog(log, text) {
-  log.innerHTML = log.innerHTML + text + '<br />';
-  log.scrollTop = log.scrollHeight;
+  log[0].innerHTML = log[0].innerHTML + text + '<br />';
+  log[0].scrollTop = log[0].scrollHeight;
 }
 
 function setUpEvaluation(editor) {
