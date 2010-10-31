@@ -12,7 +12,7 @@ html, body {
   border-top: 8px solid #4c4a41;
   border-left: 23px solid #4c4a41;
   color: white;
-  font-family: mono;
+  font-family: mono, Monaco;
   font-size: 14px;
   height: 200px;
   overflow: auto;
