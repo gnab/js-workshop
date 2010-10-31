@@ -1,0 +1,27 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #4c4a41;
+}
+#editor {
+  overflow: hidden;
+}
+#log {
+  background-color: #2a211c;
+  border-bottom: 8px solid #4c4a41;
+  border-top: 8px solid #4c4a41;
+  border-left: 23px solid #4c4a41;
+  color: white;
+  font-family: mono;
+  font-size: 14px;
+  height: 200px;
+  overflow: auto;
+  padding: 10px;
+}
+#log .info {
+  color: #aaa;
+  font-style: italic;
+}
+#log .error {
+  color: #f32;
+}
