@@ -85,7 +85,7 @@ function setUpEvaluation(editor) {
         console.clear();
       }
       try {
-        eval(editor.value);
+        eval('(function(){' + editor.value + '})()');
       } catch(err) {
         console.error(err);
       }
