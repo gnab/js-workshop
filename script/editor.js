@@ -46,9 +46,11 @@ function setUpLog(editor) {
 
   extendMethod(editor.gutterView, 'computeWidth', function() {
     var newWidth = arguments[arguments.length - 1];
-    log.css({
-      'border-left-width': newWidth + 'px'
-    });
+    if (newWidth != editor._gutterViewWidth) {
+      log.css({
+        'border-left-width': newWidth + 'px'
+      });
+    }
     return newWidth;
   });
 
