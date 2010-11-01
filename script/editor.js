@@ -44,21 +44,15 @@ function setUpLog(editor) {
       '(+ Control to clear log as well)');
   });
 
+  extendMethod(editor.gutterView, 'computeWidth', function() {
+    var newWidth = arguments[arguments.length - 1];
+    log.css({
+      'border-left-width': newWidth + 'px'
+    });
+    return newWidth;
+  });
+
   console.clear();
-
-  var gutterView = editor.gutterView;
-  var _computeWidth = gutterView.computeWidth;
-  gutterView.computeWidth = function() {
-    var width = _computeWidth.apply(gutterView, arguments);
-
-    if (width !== editor._gutterViewWidth) {
-        log.css({
-          'border-left-width': width + 'px'
-        });
-    }
-
-    return width;
-  }
 }
 
 function extendMethod(obj, method, extra) {
@@ -68,8 +62,12 @@ function extendMethod(obj, method, extra) {
     if (_method) {
       ret = _method.apply(obj, arguments);
     }
-    extra.apply(obj, arguments);
-    return ret;
+    args = []
+    for (var i = 0; i < arguments.length; i++) {
+      args.push(arguments[i]);
+    }
+    args.push(ret);
+    return extra.apply(obj, args);
   }
 }
 
