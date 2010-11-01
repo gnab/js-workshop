@@ -22,23 +22,27 @@ $(document).ready(function() {
 function setUpLog(editor) {
   var log = $('#log');
 
-  extendMethod(console, console.log, function(text) {
+  if (typeof(console) == 'undefined') {
+    console = {};
+  } 
+
+  extendMethod(console, 'log', function(text) {
     appendToLog(log, text);
   });
 
-  extendMethod(console, console.error, function(text) {
+  extendMethod(console, 'error', function(text) {
     appendToLog(log, '<span class="error">' + text + '</span>');
   });
 
-  extendMethod(console, console.info, function(text) {
+  extendMethod(console, 'info', function(text) {
     appendToLog(log, '<span class="info">' + text + '</span>');
   });
 
-  console.clear = function() {
+  extendMethod(console, 'clear', function() {
     log[0].innerHTML = '';
     console.info('Press Shift + Enter to evaluate code ' +
       '(+ Control to clear log as well)');
-  }
+  });
 
   console.clear();
 
@@ -55,14 +59,14 @@ function setUpLog(editor) {
 
     return width;
   }
-
 }
 
 function extendMethod(obj, method, extra) {
-  obj[method.name] = function() {
+  var _method = obj[method];
+  obj[method] = function() {
     ret = undefined;
-    if (method) {
-      ret = method.apply(obj, arguments);
+    if (_method) {
+      ret = _method.apply(obj, arguments);
     }
     extra.apply(obj, arguments);
     return ret;
