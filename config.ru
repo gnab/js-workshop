@@ -1,1 +1,1 @@
-run Rack::Directory.new(Dir.pwd)
+run Rack::Directory.new(File.join(Dir.pwd, 'public'))
