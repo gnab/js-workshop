@@ -1,0 +1,3 @@
+Prototyping is quite different from regular OOP.
+--
+console.log("prototyping ftw!");
