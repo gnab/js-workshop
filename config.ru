@@ -11,7 +11,7 @@ get '/tasks.js' do
   tasks = {}
   Dir['tasks/*/*'].each do |path|
     section, task = path.split('/')[1..2]
-    description, code = File.readlines(path).join.split("--\n")[0..1]
+    description, code = File.readlines(path).join.split(/^--\n/m)[0..1]
     (tasks[section] ||= {})[task] = 
       {:description => description, :code => code}
   end
