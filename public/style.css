@@ -11,7 +11,7 @@ html, body {
   border-top: 8px solid #4c4a41;
   border-left: 23px solid #4c4a41;
   color: white;
-  font-family: mono, Monaco;
+  font-family: mono, Monaco, Consolas, "Lucida Console", "Courier New";
   font-size: 14px;
   height: 200px;
   overflow: auto;

@@ -5,7 +5,7 @@ window.onBespinLoad = function() {
     settings: {
       tabstop: 2,
       fontsize: 14,
-      fontface: 'mono, Monaco'
+      fontface: 'mono, Monaco, Consolas, "Lucida Console", "Courier New"'
     }
   }).then(function(env) {
     setUpLog(env.editor);
