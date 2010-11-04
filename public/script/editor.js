@@ -113,6 +113,12 @@ function setUpEvaluation(editor) {
       } catch(err) {
         console.error(err + ', line ' + errorOnLine);
       }
+      if (!JSLINT(editor.value)) {
+        for (var i = 0; i < JSLINT.errors.length; i++) {
+          var lint = JSLINT.errors[i];
+          console.log('jslint: ' + lint.id + ' ' + lint.reason + ' - linje ' + lint.line);
+        }
+      }
     }
   });
 }
