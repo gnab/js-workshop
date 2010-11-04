@@ -10,6 +10,8 @@ window.onBespinLoad = function() {
   }).then(function(env) {
     setUpLog(env.editor);
     setUpEvaluation(env.editor);
+    setUpLayout(env.editor);
+    setUpTaskbar(env.editor);
     updateLayout();
   });
 };
@@ -19,10 +21,16 @@ $(document).ready(function() {
   updateLayout();
 });
 
+function assert(expr) {
+  if (expr !== true) {
+    throw 'Assertion failed!';
+  }
+}
+
 function setUpLog(editor) {
   var log = $('#log');
 
-  if (typeof(console) == 'undefined') {
+  if (typeof(console) !== 'undefined') {
     console = {};
   } 
 
@@ -42,16 +50,6 @@ function setUpLog(editor) {
     log[0].innerHTML = '';
     console.info('Press Shift + Enter to evaluate code ' +
       '(+ Control to clear log as well)');
-  });
-
-  extendMethod(editor.gutterView, 'computeWidth', function() {
-    var newWidth = arguments[arguments.length - 1];
-    if (newWidth != editor._gutterViewWidth) {
-      log.css({
-        'border-left-width': newWidth + 'px'
-      });
-    }
-    return newWidth;
   });
 
   console.clear();
@@ -93,11 +91,74 @@ function setUpEvaluation(editor) {
   });
 }
 
-function updateLayout() {
+function setUpLayout(editor) {
+  var taskbar = $('#taskbar');
   var log = $('#log');
-  var editor = $('#editor');
 
-  var height = window.innerHeight - log.outerHeight();
+  extendMethod(editor.gutterView, 'computeWidth', function() {
+    var newWidth = arguments[arguments.length - 1];
+    if (newWidth != editor._gutterViewWidth) {
+      taskbar.css({
+        'border-left-width': newWidth + 'px'
+      });
+      log.css({
+        'border-left-width': newWidth + 'px'
+      });
+    }
+    return newWidth;
+  });
+}
+
+function setUpTaskbar(editor) {
+  var tasks = $('#tasks');
+
+  tasks.change(function() {
+    var option = $('#tasks option:selected');
+    var code = option.data('code');
+
+    if (code) {
+      editor.value = code;
+      $('#description').html('test');
+    }
+
+    editor.focus = true;
+  });
+
+  $.getJSON('/tasks.js', function(data) {
+    tasks.empty();
+    $('<option>Select a task</option>').appendTo(tasks);
+    for (var sectionName in data) {
+      if (data.hasOwnProperty(sectionName)) {
+        var section = data[sectionName];
+
+        var sectionOptions = $('<optgroup label="' + sectionName + 
+          '"></optgroup>');
+
+        for (var taskName in section) {
+          if (section.hasOwnProperty(taskName)) {
+            var task = section[taskName];
+            var description = task['description'];
+            var code = task['code'];
+
+            var taskOption = $('<option>' + taskName + '</option>');
+            taskOption.data('code', code); 
+            taskOption.appendTo(sectionOptions);
+          }
+        }
+
+        sectionOptions.appendTo(tasks);
+      }
+    }
+  });
+}
+
+function updateLayout() {
+  var taskbar = $('#taskbar');
+  var editor = $('#editor');
+  var log = $('#log');
+
+  var height = window.innerHeight - taskbar.outerHeight() - 
+    log.outerHeight();
   var width = window.innerWidth;
 
   editor.css({ 

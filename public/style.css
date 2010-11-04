@@ -1,7 +1,19 @@
 html, body {
+  background-color: #4c4a41;
+  font-family: mono, Monaco, Consolas, "Lucida Console", "Courier New";
+  font-size: 14px;
   margin: 0;
   padding: 0;
-  background-color: #4c4a41;
+}
+#taskbar {
+  background-color: #2a211c;
+  border-bottom: 8px solid #4c4a41;
+  border-left: 23px solid #4c4a41;
+  color: #aaa;
+  padding: 10px;
+}
+#taskbar #description {
+  margin-top: 20px;
 }
 #editor {
   overflow: hidden;
@@ -11,8 +23,6 @@ html, body {
   border-top: 8px solid #4c4a41;
   border-left: 23px solid #4c4a41;
   color: white;
-  font-family: mono, Monaco, Consolas, "Lucida Console", "Courier New";
-  font-size: 14px;
   height: 200px;
   overflow: auto;
   padding: 10px;
