@@ -34,16 +34,16 @@ function setUpLog(editor) {
     console = {};
   }
 
-  extendMethod(console, 'log', function(text) {
-    appendToLog(log, text);
+  extendMethod(console, 'log', function(obj) {
+    appendToLog(log, obj);
   });
 
-  extendMethod(console, 'error', function(text) {
-    appendToLog(log, '<span class="error">' + text + '</span>');
+  extendMethod(console, 'error', function(obj) {
+    appendToLog(log, obj, 'error');
   });
 
-  extendMethod(console, 'info', function(text) {
-    appendToLog(log, '<span class="info">' + text + '</span>');
+  extendMethod(console, 'info', function(obj) {
+    appendToLog(log, obj, 'info');
   });
 
   extendMethod(console, 'clear', function() {
@@ -71,8 +71,25 @@ function extendMethod(obj, method, extra) {
   }
 }
 
-function appendToLog(log, text) {
-  log[0].innerHTML = log[0].innerHTML + text + '<br />';
+function appendToLog(log, obj, type) {
+  var element = $('<div><span class="state"/><span class="text"</div>');
+  element.addClass(type);
+  if (typeof(obj) != 'object') {
+    element.text(obj);
+  } else {
+    var json = $('<pre />');
+    var state = '+';
+    json.text(JSON.stringify(obj, null, '  '));
+    element.find('.text').text(' [Object]');
+    element.find('.state').text('+');
+    element.append(json)
+    element.click(function() {
+      json.toggle();
+      element.find('.state').text(state);
+      state = state == '+' ? '-' : '+';
+    });
+  }
+  log.append(element);
   log[0].scrollTop = log[0].scrollHeight;
 }
 

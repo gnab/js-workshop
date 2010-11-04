@@ -34,3 +34,8 @@ html, body {
 #log .error {
   color: #f32;
 }
+#log pre {
+	display: none;
+	margin: 0;
+	background: #555753;
+}
