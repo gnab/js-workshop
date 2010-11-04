@@ -18,20 +18,29 @@ html, body {
 #editor {
   overflow: hidden;
 }
-#log {
-  background-color: #2a211c;
+#console {
   border-top: 8px solid #4c4a41;
   border-left: 23px solid #4c4a41;
-  color: white;
-  height: 200px;
-  overflow: auto;
-  padding: 10px;
 }
-#log .info {
+#log, #lint {
+  height: 180px;
+  background-color: #2a211c;
+  color: white;
+	padding: 10px;
+  overflow: auto;
+}
+#log {
+	margin-right: 8px;
+}
+#lint {
+	float: right;
+	width: 40%;
+}
+#log .info, #lint .info {
   color: #aaa;
   font-style: italic;
 }
-#log .error {
+#log .error, #lint .error {
   color: #f32;
 }
 #log pre {

@@ -29,30 +29,50 @@ function assert(expr) {
 
 function setUpLog(editor) {
   var log = $('#log');
+  var lintlog = $('#lint');
 
   if (typeof(console) !== 'undefined') {
     console = {};
   }
+  lintconsole = {};
 
   extendMethod(console, 'log', function(obj) {
     appendToLog(log, obj);
+  });
+
+  extendMethod(lintconsole, 'log', function(obj) {
+    appendToLog(lintlog, obj);
   });
 
   extendMethod(console, 'error', function(obj) {
     appendToLog(log, obj, 'error');
   });
 
+  extendMethod(lintconsole, 'error', function(obj) {
+    appendToLog(lintlog, obj, 'error');
+  });
+
   extendMethod(console, 'info', function(obj) {
     appendToLog(log, obj, 'info');
   });
 
+  extendMethod(lintconsole, 'info', function(obj) {
+    appendToLog(lintlog, obj, 'info');
+  });
+
   extendMethod(console, 'clear', function() {
-    log[0].innerHTML = '';
+    log.children().remove()
     console.info('Press Shift + Enter to evaluate code ' +
       '(+ Control to clear log as well)');
   });
 
+  extendMethod(lintconsole, 'clear', function() {
+    lintlog.children().remove()
+    lintconsole.info('Lint errors:');
+  });
+
   console.clear();
+  lintconsole.clear();
 }
 
 function extendMethod(obj, method, extra) {
@@ -113,19 +133,14 @@ function setUpEvaluation(editor) {
       } catch(err) {
         console.error(err + ', line ' + errorOnLine);
       }
-      if (!JSLINT(editor.value)) {
-        for (var i = 0; i < JSLINT.errors.length; i++) {
-          var lint = JSLINT.errors[i];
-          console.log('jslint: ' + lint.id + ' ' + lint.reason + ' - linje ' + lint.line);
-        }
-      }
+      checkForLintErrors(editor.value);
     }
   });
 }
 
 function setUpLayout(editor) {
   var taskbar = $('#taskbar');
-  var log = $('#log');
+  var console = $('#console');
 
   extendMethod(editor.gutterView, 'computeWidth', function() {
     var newWidth = arguments[arguments.length - 1];
@@ -133,7 +148,7 @@ function setUpLayout(editor) {
       taskbar.css({
         'border-left-width': newWidth + 'px'
       });
-      log.css({
+      console.css({
         'border-left-width': newWidth + 'px'
       });
     }
@@ -181,14 +196,28 @@ function setUpTaskbar(editor) {
 function updateLayout() {
   var taskbar = $('#taskbar');
   var editor = $('#editor');
-  var log = $('#log');
+  var console = $('#console');
+  var lint = $('#lint');
 
   var height = window.innerHeight - taskbar.outerHeight() - 
-    log.outerHeight();
+    console.outerHeight();
   var width = window.innerWidth;
 
   editor.css({ 
     height: height + 'px', 
     width: width + 'px'  
   });
+}
+
+function checkForLintErrors(code) {
+  lintconsole.clear()
+
+  if (!JSLINT(code)) {
+    for (var i = 0; i < JSLINT.errors.length; i++) {
+      var lint = JSLINT.errors[i];
+      lintconsole.error('linje ' + lint.line + ': ' +
+          lint.id + ' ' + lint.reason, 'error'
+      );
+    }
+  }
 }
