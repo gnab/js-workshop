@@ -12,6 +12,7 @@ window.onBespinLoad = function() {
     setUpEvaluation(env.editor);
     setUpLayout(env.editor);
     setUpTaskbar(env.editor);
+    setUpChangeLineNumber(env.editor);
     updateLayout();
   });
 };
@@ -190,6 +191,12 @@ function setUpTaskbar(editor) {
 
       sectionTag.appendTo(tasks);
     });
+  });
+}
+
+function setUpChangeLineNumber(editor) {
+  $(document).bind('changeLineNumber', function(event, num) {
+    editor.setLineNumber(num);
   });
 }
 
