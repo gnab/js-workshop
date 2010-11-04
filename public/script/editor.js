@@ -82,24 +82,18 @@ function setUpEvaluation(editor) {
       if (e.ctrlKey) {
         console.clear();
       }
-      var code = function() {
-        try {
-          /* CODE */
-        } catch(err) {
-          var line = ' '
-          if (err.stack) {
-            var match = err.stack.match(/.*:(\d+):(\d+)/);
-            line += '(linje: ' + (match[1]-2) + ' tegn: ' + match[2] + ')';
-          } else if (err.stacktrace) {
-            var match = err.stacktrace(/.*line (\d+), column (\d+)/i);
-            line += '(linje: ' + (match[1]-2) + ' tegn: ' + match[2] + ')';
-          }
-          console.error(err + line);
+      try {
+        var errorOnLine;
+        var lines = editor.value.split('\n');
+        var code = ''
+        for (var i = 0; i < lines.length; i++) {
+          code += 'errorOnLine = ' + (i+1) + ';\n';
+          code += lines[i] + '\n';
         }
-      };
-      var script = document.createElement("script");
-      script.textContent = "(" + code.toString().replace('/* CODE */', editor.value) + ")();";
-      document.body.appendChild(script);
+        eval('(function(){' + code + '})()');
+      } catch(err) {
+        console.error(err + ', linje ' + errorOnLine);
+      }
     }
   });
 }
