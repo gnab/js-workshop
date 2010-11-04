@@ -8,15 +8,18 @@ get '/' do
 end
 
 get '/tasks.js' do
-  tasks = {}
-  Dir['tasks/*/*'].each do |path|
+  JSON(Dir['tasks/*/*'].inject({}) { |sections, path|
     section, task = path.split('/')[1..2]
+    sections[section] ||= {:name => section, :tasks => []}
+
     description, code = File.readlines(path).join.split(/^--$/m).
       collect { |text| text.strip }[0..1]
-    (tasks[section] ||= {})[task] = 
-      {:description => description, :code => code}
-  end
-  JSON(tasks)
+
+    sections[section][:tasks].push({
+      :name => task, :description => description, :code => code
+    })
+    sections
+  }.values)
 end
 
 run Sinatra::Application

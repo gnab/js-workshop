@@ -114,41 +114,35 @@ function setUpTaskbar(editor) {
 
   tasks.change(function() {
     var option = $('#tasks option:selected');
-    var code = option.data('code');
+    var task = option.data('task');
 
-    if (code) {
-      editor.value = code;
-      $('#description').html('test');
+    if (task) {
+      editor.value = task.code;
+      $('#description').html(task.description);
+    }
+    else {
+      $('#description').html('&nbsp;');
     }
 
     editor.focus = true;
   });
 
-  $.getJSON('/tasks.js', function(data) {
+  $.getJSON('/tasks.js', function(sections) {
     tasks.empty();
     $('<option>Select a task</option>').appendTo(tasks);
-    for (var sectionName in data) {
-      if (data.hasOwnProperty(sectionName)) {
-        var section = data[sectionName];
 
-        var sectionOptions = $('<optgroup label="' + sectionName + 
-          '"></optgroup>');
+    $(sections).each(function(i, section) {
+      var sectionTag = $('<optgroup label="' + section.name + 
+        '"></optgroup>');
 
-        for (var taskName in section) {
-          if (section.hasOwnProperty(taskName)) {
-            var task = section[taskName];
-            var description = task['description'];
-            var code = task['code'];
+      $(section.tasks).each(function(j, task) {
+        var taskTag = $('<option>' + task.name + '</option>');
+        taskTag.data('task', task); 
+        taskTag.appendTo(sectionTag);
+      });
 
-            var taskOption = $('<option>' + taskName + '</option>');
-            taskOption.data('code', code); 
-            taskOption.appendTo(sectionOptions);
-          }
-        }
-
-        sectionOptions.appendTo(tasks);
-      }
-    }
+      sectionTag.appendTo(tasks);
+    });
   });
 }
 
