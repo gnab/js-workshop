@@ -32,7 +32,7 @@ function setUpLog(editor) {
 
   if (typeof(console) !== 'undefined') {
     console = {};
-  } 
+  }
 
   extendMethod(console, 'log', function(text) {
     appendToLog(log, text);
@@ -82,11 +82,24 @@ function setUpEvaluation(editor) {
       if (e.ctrlKey) {
         console.clear();
       }
-      try {
-        eval('(function(){' + editor.value + '})()');
-      } catch(err) {
-        console.error(err);
-      }
+      var code = function() {
+        try {
+          /* CODE */
+        } catch(err) {
+          var line = ' '
+          if (err.stack) {
+            var match = err.stack.match(/.*:(\d+):(\d+)/);
+            line += '(linje: ' + (match[1]-2) + ' tegn: ' + match[2] + ')';
+          } else if (err.stacktrace) {
+            var match = err.stacktrace(/.*line (\d+), column (\d+)/i);
+            line += '(linje: ' + (match[1]-2) + ' tegn: ' + match[2] + ')';
+          }
+          console.error(err + line);
+        }
+      };
+      var script = document.createElement("script");
+      script.textContent = "(" + code.toString().replace('/* CODE */', editor.value) + ")();";
+      document.body.appendChild(script);
     }
   });
 }
