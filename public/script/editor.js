@@ -178,11 +178,9 @@ function setUpTaskbar(editor) {
     $('<option>Select a task</option>').appendTo(tasks);
 
     $(sections).each(function(i, section) {
-      var sectionTag = $('<optgroup label="' + section.name +
-        '"></optgroup>');
-
+      var sectionTag = $('<optgroup />').attr('label', section.name);
       $(section.tasks).each(function(j, task) {
-        var taskTag = $('<option>' + task.name + '</option>');
+        var taskTag = $('<option />').text(task.name);
         taskTag.data('task', task);
         taskTag.appendTo(sectionTag);
       });
