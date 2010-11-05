@@ -44,6 +44,10 @@ function setUpLog(editor) {
     appendToLog(log, obj, 'error');
   });
 
+  extendMethod(console, 'errorLine', function(obj, line) {
+    appendToLog(log, obj, 'error', line);
+  });
+
   extendMethod(console, 'info', function(obj) {
     appendToLog(log, obj, 'info');
   });
@@ -55,14 +59,11 @@ function setUpLog(editor) {
   });
 
   lintconsole = {
-    'log': function(obj) {
-      appendToLog(lintlog, obj);
-    },
-    'error': function(obj) {
-      appendToLog(lintlog, obj, 'error');
-    },
     'info': function(obj) {
       appendToLog(lintlog, obj, 'info');
+    },
+    'errorLine': function(obj, line) {
+      appendToLog(lintlog, obj, 'error', line);
     },
     'clear': function() {
       lintlog.children().remove()
@@ -90,25 +91,26 @@ function extendMethod(obj, method, extra) {
   }
 }
 
-function appendToLog(log, obj, type) {
+function appendToLog(log, obj, type, line) {
   var element = $('<div></div>');
-  element.addClass(type);
+  if (type) {
+    element.addClass(type);
+  }
   if (typeof(obj) != 'object') {
     element.text(obj);
   } else {
     var json = $('<pre />');
     json.text(JSON.stringify(obj, null, '  '));
-    if (obj instanceof Error) {
-      element.text(' ' + obj);
-    } else {
-      element.text(' [Object]');
-    }
+    element.text('[Object]');
     element.addClass('closed');;
     element.append(json)
     element.click(function() {
       element.toggleClass('closed');
       element.toggleClass('open');
     });
+  }
+  if (line) {
+    element.prepend($('<span class="line" />').text('line ' + line));
   }
   log.append(element);
   log.scrollTop(log[0].scrollHeight);
@@ -130,7 +132,7 @@ function setUpEvaluation(editor) {
         }
         eval('(function(){' + code + '})()');
       } catch(err) {
-        console.error(err + ', line ' + errorOnLine);
+        console.errorLine(err + '', errorOnLine);
       }
       checkForLintErrors(editor.value);
     }
@@ -191,8 +193,9 @@ function setUpTaskbar(editor) {
 }
 
 function setUpChangeLineNumber(editor) {
-  $(document).bind('changeLineNumber', function(event, num) {
-    editor.setLineNumber(num);
+  $('#console .line').live('click', function() {
+    var line = $(this).text().match(/(\d+)/)[0];
+    editor.setLineNumber(parseInt(line));
   });
 }
 
@@ -218,9 +221,7 @@ function checkForLintErrors(code) {
   if (!JSLINT(code)) {
     for (var i = 0; i < JSLINT.errors.length; i++) {
       var lint = JSLINT.errors[i];
-      lintconsole.error('line ' + lint.line + ': ' +
-          lint.id + ' ' + lint.reason, 'error'
-      );
+        lintconsole.errorLine(lint.id + ' ' + lint.reason, lint.line);
     }
   }
 }

@@ -65,3 +65,9 @@ html, body {
 #log .open {
 	background-image: url(/images/minus.gif);
 }
+#log .line, #lint .line {
+	text-decoration: underline;
+	cursor: pointer;
+	display: inline-block;
+	margin-right: 1em;
+}
