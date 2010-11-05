@@ -92,7 +92,7 @@ function appendToLog(log, obj, type) {
     });
   }
   log.append(element);
-  log[0].scrollTop = log[0].scrollHeight;
+  log.scrollTop(log[0].scrollHeight);
 }
 
 function setUpEvaluation(editor) {

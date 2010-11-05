@@ -39,6 +39,7 @@ html, body {
 	background: #555753;
 	color: white;
 	margin-left: -16px;
+	overflow-x: auto;
 }
 #log .closed, #log .open {
 	padding-left: 16px;
