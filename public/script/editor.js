@@ -92,7 +92,7 @@ function setUpEvaluation(editor) {
         }
         eval('(function(){' + code + '})()');
       } catch(err) {
-        console.error(err + ', linje ' + errorOnLine);
+        console.error(err + ', line ' + errorOnLine);
       }
     }
   });
