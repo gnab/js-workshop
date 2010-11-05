@@ -80,7 +80,11 @@ function appendToLog(log, obj, type) {
     var json = $('<pre />');
     var state = '+';
     json.text(JSON.stringify(obj, null, '  '));
-    element.find('.text').text(' [Object]');
+    if (obj instanceof Error) {
+      element.find('.text').text(' ' + obj);
+    } else {
+      element.find('.text').text(' [Object]');
+    }
     element.find('.state').text('+');
     element.append(json)
     element.click(function() {
