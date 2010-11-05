@@ -218,7 +218,7 @@ function checkForLintErrors(code) {
   if (!JSLINT(code)) {
     for (var i = 0; i < JSLINT.errors.length; i++) {
       var lint = JSLINT.errors[i];
-      lintconsole.error('linje ' + lint.line + ': ' +
+      lintconsole.error('line ' + lint.line + ': ' +
           lint.id + ' ' + lint.reason, 'error'
       );
     }
