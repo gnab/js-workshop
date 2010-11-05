@@ -180,12 +180,12 @@ function setUpTaskbar(editor) {
     $('<option>Select a task</option>').appendTo(tasks);
 
     $(sections).each(function(i, section) {
-      var sectionTag = $('<optgroup label="' + section.name + 
+      var sectionTag = $('<optgroup label="' + section.name +
         '"></optgroup>');
 
       $(section.tasks).each(function(j, task) {
         var taskTag = $('<option>' + task.name + '</option>');
-        taskTag.data('task', task); 
+        taskTag.data('task', task);
         taskTag.appendTo(sectionTag);
       });
 
@@ -206,13 +206,13 @@ function updateLayout() {
   var console = $('#console');
   var lint = $('#lint');
 
-  var height = window.innerHeight - taskbar.outerHeight() - 
+  var height = window.innerHeight - taskbar.outerHeight() -
     console.outerHeight();
   var width = window.innerWidth;
 
-  editor.css({ 
-    height: height + 'px', 
-    width: width + 'px'  
+  editor.css({
+    height: height + 'px',
+    width: width + 'px'
   });
 }
 
