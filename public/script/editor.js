@@ -35,30 +35,17 @@ function setUpLog(editor) {
   if (typeof(console) !== 'undefined') {
     console = {};
   }
-  lintconsole = {};
 
   extendMethod(console, 'log', function(obj) {
     appendToLog(log, obj);
-  });
-
-  extendMethod(lintconsole, 'log', function(obj) {
-    appendToLog(lintlog, obj);
   });
 
   extendMethod(console, 'error', function(obj) {
     appendToLog(log, obj, 'error');
   });
 
-  extendMethod(lintconsole, 'error', function(obj) {
-    appendToLog(lintlog, obj, 'error');
-  });
-
   extendMethod(console, 'info', function(obj) {
     appendToLog(log, obj, 'info');
-  });
-
-  extendMethod(lintconsole, 'info', function(obj) {
-    appendToLog(lintlog, obj, 'info');
   });
 
   extendMethod(console, 'clear', function() {
@@ -67,10 +54,21 @@ function setUpLog(editor) {
       '(+ Control to clear log as well)');
   });
 
-  extendMethod(lintconsole, 'clear', function() {
-    lintlog.children().remove()
-    lintconsole.info('Lint errors:');
-  });
+  lintconsole = {
+    'log': function(obj) {
+      appendToLog(lintlog, obj);
+    },
+    'error': function(obj) {
+      appendToLog(lintlog, obj, 'error');
+    },
+    'info': function(obj) {
+      appendToLog(lintlog, obj, 'info');
+    },
+    'clear': function() {
+      lintlog.children().remove()
+      lintconsole.info('Lint errors:');
+    }
+  };
 
   console.clear();
   lintconsole.clear();
