@@ -72,25 +72,23 @@ function extendMethod(obj, method, extra) {
 }
 
 function appendToLog(log, obj, type) {
-  var element = $('<div><span class="state"/><span class="text"</div>');
+  var element = $('<div></div>');
   element.addClass(type);
   if (typeof(obj) != 'object') {
     element.text(obj);
   } else {
     var json = $('<pre />');
-    var state = '+';
     json.text(JSON.stringify(obj, null, '  '));
     if (obj instanceof Error) {
-      element.find('.text').text(' ' + obj);
+      element.text(' ' + obj);
     } else {
-      element.find('.text').text(' [Object]');
+      element.text(' [Object]');
     }
-    element.find('.state').text('+');
+    element.addClass('closed');;
     element.append(json)
     element.click(function() {
-      json.toggle();
-      element.find('.state').text(state);
-      state = state == '+' ? '-' : '+';
+      element.toggleClass('closed');
+      element.toggleClass('open');
     });
   }
   log.append(element);

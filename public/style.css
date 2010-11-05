@@ -35,8 +35,23 @@ html, body {
   color: #f32;
 }
 #log pre {
-	display: none;
 	margin: 0;
 	background: #555753;
 	color: white;
+	margin-left: -16px;
+}
+#log .closed, #log .open {
+	padding-left: 16px;
+	background: transparent no-repeat 3px 3px;
+	cursor: pointer;
+}
+
+#log .closed pre {
+	display: none;
+}
+#log .closed {
+	background-image: url(/images/plus.gif);
+}
+#log .open {
+	background-image: url(/images/minus.gif);
 }
