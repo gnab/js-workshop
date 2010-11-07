@@ -1,0 +1,21 @@
+Prototyping is quite different from regular OOP. Give the car the honk method. DRY!
+--
+var utilities = {
+  honk: function(){
+    console.log('Honk!');
+  }
+};                          
+
+var create = function (prototype) {
+  function F() {}
+  // .. 
+  return new F();
+};
+                             
+var bmw = create(utilities);
+bmw.honk();
+
+var honda = create(utilities);
+honda.honk();
+
+assert(bmw.honk === honda.honk);
