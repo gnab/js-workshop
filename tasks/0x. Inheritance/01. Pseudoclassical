@@ -3,7 +3,7 @@ Every Car can honk, but here every Car has a new instance of the honk function! 
 var Car = function Car () {
   this.honk = function () {
     console.log('Honk!');
-  }
+  };
 };                           
 
 var bmw = new Car();         

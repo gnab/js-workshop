@@ -1,0 +1,8 @@
+Make the following code log the sequence of numbers 0-4 in two ways; (1) using a helper function and (2) using a function that returns a function.
+--
+var i;
+for (i = 0; i < 5; i++) {
+  setTimeout(function () {
+    console.log(i);
+  }, i*1000);
+}
