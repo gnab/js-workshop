@@ -1,0 +1,10 @@
+Complete the method times, so that it can create methods that will return the next number in the sequence of numbers divisible by n for each subsequent call.
+--
+var times = function (n) {
+
+};                                 
+
+var times2 = times(2);
+times2(); // 2
+times2(); // 4
+times2(); // 8                  
