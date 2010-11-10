@@ -1,10 +1,12 @@
-Every Car can honk, but here every Car has a new instance of the honk function! Plz fix! 
+Every Car can honk, but here every Car has a new instance of the honk function! Try to fix this so that new Cars will share the honk method, utilizing an objects prototype property! 
 --
 var Car = function Car () {
   this.honk = function () {
     console.log('Honk!');
   };
 };                           
+
+//Car.proto..
 
 var bmw = new Car();         
 bmw.honk();

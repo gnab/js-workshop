@@ -1,13 +1,13 @@
-Prototypal inheritance is quite different from regular OOP. Give the car the honk method using protoypal inheritance, inheriting directly from the utilities object.
+Give the car the honk method using protoypal inheritance, inheriting directly from the utilities object.
 --
 var utilities = {
-  honk: function(){
+  honk: function () {
     console.log('Honk!');
   }
 };                          
 
 var create = function create (prototype) {
-  function F() {}
+  function F () {}
   // .. 
   return new F();
 };
