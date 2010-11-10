@@ -123,16 +123,9 @@ function setUpEvaluation(editor) {
         console.clear();
       }
       try {
-        var errorOnLine;
-        var lines = editor.value.split('\n');
-        var code = ''
-        for (var i = 0; i < lines.length; i++) {
-          code += 'errorOnLine = ' + (i+1) + ';\n';
-          code += lines[i] + '\n';
-        }
-        eval('(function(){' + code + '})()');
+        eval('(function(){' + editor.value + '})()');
       } catch(err) {
-        console.errorLine(err + '', errorOnLine);
+        console.error(err);
       }
       checkForLintErrors(editor.value);
     }
