@@ -44,10 +44,6 @@ function setUpLog(editor) {
     appendToLog(log, obj, 'error');
   });
 
-  extendMethod(console, 'errorLine', function(obj, line) {
-    appendToLog(log, obj, 'error', line);
-  });
-
   extendMethod(console, 'info', function(obj) {
     appendToLog(log, obj, 'info');
   });
@@ -62,7 +58,7 @@ function setUpLog(editor) {
     'info': function(obj) {
       appendToLog(lintlog, obj, 'info');
     },
-    'errorLine': function(obj, line) {
+    'error': function(obj, line) {
       appendToLog(lintlog, obj, 'error', line);
     },
     'clear': function() {
@@ -101,7 +97,11 @@ function appendToLog(log, obj, type, line) {
   } else {
     var json = $('<pre />');
     json.text(JSON.stringify(obj, null, '  '));
-    element.text(Object.prototype.toString.call(obj));
+    if (obj instanceof Error) {
+      element.text(obj + '');
+    } else {
+      element.text(Object.prototype.toString.call(obj));
+    }
     element.addClass('closed');;
     element.append(json)
     element.click(function() {
@@ -214,7 +214,7 @@ function checkForLintErrors(code) {
   if (!JSLINT(code)) {
     for (var i = 0; i < JSLINT.errors.length; i++) {
       var lint = JSLINT.errors[i];
-        lintconsole.errorLine(lint.id + ' ' + lint.reason, lint.line);
+        lintconsole.error(lint.id + ' ' + lint.reason, lint.line);
     }
   }
 }
