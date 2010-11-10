@@ -101,7 +101,7 @@ function appendToLog(log, obj, type, line) {
   } else {
     var json = $('<pre />');
     json.text(JSON.stringify(obj, null, '  '));
-    element.text('[Object]');
+    element.text(Object.prototype.toString.call(obj));
     element.addClass('closed');;
     element.append(json)
     element.click(function() {
