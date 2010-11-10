@@ -1,0 +1,10 @@
+Set the three properties, in three different ways.
+--
+var person = {
+  
+};
+                                       
+
+assert(person.name === 'bob');
+assert(person.gender === 'male');
+assert(person.weight === 100);

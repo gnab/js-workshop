@@ -1,0 +1,15 @@
+Fix the following code by adding one line and changing one word.
+--
+var PI = {
+  factor : 3.14,
+  times : function (a) {
+                        
+    var calculate = function (num) {
+       return num * this.factor; // wtf?
+    };
+    
+    return calculate(a);
+  }
+}             
+                              
+assert(PI.times(2) === 6.28);

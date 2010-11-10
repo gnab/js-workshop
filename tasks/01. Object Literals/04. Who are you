@@ -1,0 +1,11 @@
+
+function print (obj) {
+return typeof obj;
+}
+
+assert(print(new Number(1)) === 'number');
+assert(print(1) === 'number');
+assert(print(new Boolean()) === 'boolean');
+assert(print(false) === 'boolean');
+assert(print(new Array()) === 'object');
+assert(print([]) === 'object');

@@ -1,0 +1,6 @@
+Create a function that returns new functions that return true!
+--
+var createFunction = function () {};
+
+assert(typeof createFunction() === 'function', 'createFunction() should return a function');
+assert(createFunction()() === true, "calling createFunction's returned function should return true");

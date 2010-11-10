@@ -6,7 +6,7 @@ var Car = function Car () {
   };
 };                           
 
-//Car.proto..
+//Car.proto..                  
 
 var bmw = new Car();         
 bmw.honk();

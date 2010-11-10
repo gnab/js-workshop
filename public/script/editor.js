@@ -22,10 +22,10 @@ $(document).ready(function() {
   updateLayout();
 });
 
-function assert(expr) {
+function assert (expr, msg) {
   if (expr !== true) {
-    throw 'Assertion failed!';
-  }
+    throw msg || 'Assertion failed!';
+  }                            
 }
 
 function setUpLog(editor) {

@@ -1,0 +1,9 @@
+What is this?
+--
+var add = function(a, b) {
+  this.result = a + b;
+}
+
+add(1, 2);
+
+assert( ... === 3);
