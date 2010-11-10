@@ -122,8 +122,9 @@ function setUpEvaluation(editor) {
       if (e.ctrlKey) {
         console.clear();
       }
-      try {
-        eval('(function(){' + editor.value + '})()');
+      try {                       
+        console.log(editor.value)
+        eval('(function(){' + editor.value + '\n})()');
       } catch(err) {
         console.error(err);
       }
