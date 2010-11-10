@@ -123,7 +123,6 @@ function setUpEvaluation(editor) {
         console.clear();
       }
       try {                       
-        console.log(editor.value)
         eval('(function(){' + editor.value + '\n})()');
       } catch(err) {
         console.error(err);
