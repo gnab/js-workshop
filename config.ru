@@ -8,7 +8,7 @@ get '/' do
 end
 
 get '/tasks.js' do
-  JSON(Dir['tasks/*/*'].inject({}) { |sections, path|
+  JSON(Dir['tasks/*/*'].sort.inject({}) { |sections, path|
     section, task = path.split('/')[1..2]
     sections[section] ||= {:name => section, :tasks => []}
 
