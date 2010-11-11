@@ -1,4 +1,4 @@
-Complete createCopy, so that all properties of the original are copied to b.
+Complete createCopy, so that all properties of the original are transfered to the copy.
 --
 function createCopy (original) {
   var copy = [];
