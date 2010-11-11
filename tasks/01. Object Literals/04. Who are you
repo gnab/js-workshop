@@ -1,6 +1,6 @@
-
+Who are you
+--
 function print (obj) {
-return typeof obj;
 }
 
 assert(print(new Number(1)) === 'number');

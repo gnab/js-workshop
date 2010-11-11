@@ -1,0 +1,20 @@
+Make honda h "inherit" car's honk method by changing one line of code.
+--
+var car = function (spec) {
+  spec = spec || {};
+  var that = {};
+
+  that.honk = function () {
+    return spec.sound;
+  };
+
+  return that;
+};
+
+var honda = function (spec) {
+  var that = {};
+  return that;
+};
+
+var h = honda({ sound: 'honk!' }); 
+assert(h.honk() === 'honk!');
