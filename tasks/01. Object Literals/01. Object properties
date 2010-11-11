@@ -5,6 +5,6 @@ var person = {
 };
                                        
 
-assert(person.name === 'bob');
-assert(person.gender === 'male');
-assert(person.weight === 100);
+assert(person.name === 'bob', 'name should equal "bob"');
+assert(person.gender === 'male', 'gender should equal "mail"');
+assert(person.weight === 100, 'weight should equal 100');
