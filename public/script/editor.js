@@ -24,8 +24,8 @@ $(document).ready(function() {
 
 function assert (expr, msg) {
   if (expr !== true) {
-    throw msg || 'Assertion failed!';
-  }                            
+    throw new Error(msg || 'Assertion failed!');
+  }
 }
 
 function setUpLog(editor) {
