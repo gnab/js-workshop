@@ -74,11 +74,11 @@ function setUpLog(editor) {
 function extendMethod(obj, method, extra) {
   var _method = obj[method];
   obj[method] = function() {
-    var ret;
+    var ret, args;
     if (_method) {
       ret = _method.apply(obj, arguments);
     }
-    var args = Array.prototype.slice.apply(arguments);
+    args = Array.prototype.slice.apply(arguments);
     args.push(ret);
     return extra.apply(obj, args);
   }
