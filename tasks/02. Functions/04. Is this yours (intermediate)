@@ -4,6 +4,7 @@ var bob = {
   name: 'Bob',
   greet: function () {
     return 'O hai ' + this.name + '!';
+  }
 };
 
 var ed = {
