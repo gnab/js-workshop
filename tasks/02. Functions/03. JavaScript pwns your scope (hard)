@@ -7,7 +7,7 @@ var s = 1;
 (function () {
   a = 2;
   b = 4;
-  var c = 3;
+  var C = 3;
   d = 1;
   s = 2;
 
