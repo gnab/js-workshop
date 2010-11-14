@@ -4,5 +4,5 @@ function doubleMe (val) {
 
 }
 
-assert(doubleMe(17) === 34, '17 doubled should equal 34');
-assert(doubleMe('painnkaak') === 'painnkaakpainnkaak', '"painnkaak" double should equal "painnkaakpainnkaak"');
+assert(doubleMe(17) === 'number 34', '17 doubled should equal "number 34"');
+assert(doubleMe('painnkaak') === 'string painnkaakpainnkaak', 'painnkaak doubled should equal "string painnkaakpainnkaak"');
