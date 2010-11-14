@@ -10,7 +10,7 @@ function createCopy (original) {
 
 var a = [];
 a.key = 1;              
-a.['key2'] = 1;
+a['key2'] = 1;
 a.push(2);
 
 var b = createCopy(a);       
