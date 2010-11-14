@@ -34,9 +34,3 @@ var s = 1;
 // assert( .. === 1);
 // assert( .. === 1);
 // assert( .. === 'undefined');
-
-function assert (what) { 
-  if (what !== true) { 
-    throw 'assertion failed';
-  }
-}
