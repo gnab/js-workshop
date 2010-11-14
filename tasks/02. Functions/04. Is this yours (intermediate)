@@ -1,9 +1,10 @@
 Use Bob's greet method to greet Ed! Don't repeat yourself, please.
 --
 var bob = {
-  name: 'Bob'
+  name: 'Bob',
   greet: function () {
     return 'O hai ' + this.name + '!';
+  }
 };
 
 var ed = {
