@@ -1,3 +1,7 @@
+// FIXME run button
+// FIXME reset button
+// FIXME local storage of code on close and on change?
+
 window.onBespinLoad = function() {
   bespin.useBespin('editor', {
     stealFocus: true,
@@ -119,9 +123,12 @@ function setUpEvaluation(editor) {
       if (e.ctrlKey) {
         console.clear();
       }
-      try {                       
+      try {
+        // FIXME eval in iframe?
+        // FIXME complain about new globals
         eval('(function(){' + editor.value + '\n})()');
       } catch(err) {
+	// FIXME extract line number from err via stack or lineNumber
         console.error(err);
       }
       checkForLintErrors(editor.value);
