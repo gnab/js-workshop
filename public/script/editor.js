@@ -158,17 +158,23 @@ function setUpTaskbar(editor) {
   var tasks = $('#tasks');
 
   tasks.change(function() {
+    var previous = $(this).data('previous');
     var option = $('#tasks option:selected');
     var task = option.data('task');
 
+    if (previous) {
+      localStorage[previous] = editor.value;
+    }
+
     if (task) {
-      editor.value = task.code;
+      editor.value = localStorage[task.name] || task.code;
       $('#description').html(task.description);
+      $(this).data('previous', task.name);
     }
     else {
       $('#description').html('&nbsp;');
+      $(this).data('previous', null);
     }
-
     editor.focus = true;
   });
 
