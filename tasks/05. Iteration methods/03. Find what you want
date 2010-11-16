@@ -1,0 +1,20 @@
+Using your forEach function build a odd number filter
+--
+var forEach = globals.forEach;
+var data = [1, 2, 3, 4, 5, 6, 7, 9, 10];
+
+function filter(array, func) {
+  var res = [];
+  forEach(array, function(element, index, array) {
+    if (func(element, index, array)) {
+      res.push(element);
+    }
+  });
+  return res;
+}
+
+var result = filter(data, function(element, index, array) {
+  return element % 2 == 1;
+});
+
+console.log(result);

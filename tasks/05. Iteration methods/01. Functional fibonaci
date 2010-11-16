@@ -1,0 +1,15 @@
+Write a basic functional fibonaci in JS :)
+--
+
+function fib(n) {
+  if (n <= 1) {
+    return n;
+  }
+  return fib(n-1) + fib(n-2);
+}
+
+assert(fib(1) == 1, 'fib(1) != 1');
+assert(fib(2) == 1, 'fib(2) != 1');
+assert(fib(3) == 2, 'fib(3) != 2');
+assert(fib(4) == 3, 'fib(4) != 3');
+assert(fib(9) == 34, 'fib(9) != 34');

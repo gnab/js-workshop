@@ -1,0 +1,27 @@
+Find the needle in the haystack
+--
+var forEach = globals.forEach;
+var data = [];
+for (var i = 0; i < 100; i++) {
+  data.push(i);
+}
+
+function some(array, func) {
+  var res = false;
+  forEach(array, function(element, index, array) {
+    res = res || func(element, index, array);
+  });
+  return res;
+}
+
+function sumEqualProduct(value) {
+  var parts = (value + "").split("", 2);
+  var first = parseInt(parts[0], 10);
+  var second = parseInt(parts[1], 10);
+  return first+second == first*second;
+}
+
+console.log(some(data, sumEqualProduct));
+
+// Now use another list manipulation technique to
+// find out which number we found :)

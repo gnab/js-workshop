@@ -1,0 +1,13 @@
+Print all the numbers in the array using your own forEach
+--
+var data = [1, 2, 3, 4, 5];
+
+function forEach(array, func) {
+  for (var i = 0; i < array.length; i++) {
+    func(array[i], i, array);
+  }
+}
+
+forEach(data, function(element, index, array) {
+  console.log(element);
+});

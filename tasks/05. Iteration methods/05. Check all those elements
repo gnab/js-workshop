@@ -1,0 +1,17 @@
+--
+var forEach = globals.forEach;
+
+function every(array, func) {
+  var res = true;
+  forEach(array, function(element, index, array) {
+    res = res && func(element, index, array);
+  });
+  return res;
+}
+
+function greaterThanZero(element, index, array) {
+  return element > 0;
+}
+
+assert(every([1, 2, 3], greaterThanZero) === true);
+assert(every([1, -2, 3], greaterThanZero) === false);
