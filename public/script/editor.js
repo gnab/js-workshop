@@ -119,6 +119,7 @@ function setUpEvaluation(editor) {
   });
 
   $('#run').click(function() {
+    var start = new Date().getTime();
     try {
       // FIXME eval in iframe?
       // FIXME complain about new globals
@@ -127,6 +128,8 @@ function setUpEvaluation(editor) {
       // FIXME extract line number from err via stack or lineNumber
       console.error(err);
     }
+    var end = new Date().getTime();
+    console.info('Code excuted in ' + (end - start) + 'ms at ' + new Date());
     checkForLintErrors(editor.value);
   });
 
