@@ -1,7 +1,3 @@
-// FIXME run button
-// FIXME reset button
-// FIXME local storage of code on close and on change?
-
 window.onBespinLoad = function() {
   bespin.useBespin('editor', {
     stealFocus: true,
@@ -118,20 +114,39 @@ function appendToLog(log, obj, type, line) {
 }
 
 function setUpEvaluation(editor) {
+  $('#clear').click(function() {
+    console.clear();
+  });
+
+  $('#run').click(function() {
+    try {
+      // FIXME eval in iframe?
+      // FIXME complain about new globals
+      eval('(function(){' + editor.value + '\n})()');
+    } catch(err) {
+      // FIXME extract line number from err via stack or lineNumber
+      console.error(err);
+    }
+    checkForLintErrors(editor.value);
+  });
+
+  $('#reset').click(function() {
+    var task = $('#tasks').data('current')
+    delete localStorage[task.name];
+    editor.value = task.code;
+  });
+
+  $(window).bind('beforeunload', function() {
+    var task = $('#tasks').data('current')
+    localStorage[task.name] = editor.value;
+  });
+
   $(document).keyup(function(e) {
     if (e.shiftKey && e.keyCode === 13) {
       if (e.ctrlKey) {
-        console.clear();
+        $('#clear').click();
       }
-      try {
-        // FIXME eval in iframe?
-        // FIXME complain about new globals
-        eval('(function(){' + editor.value + '\n})()');
-      } catch(err) {
-	// FIXME extract line number from err via stack or lineNumber
-        console.error(err);
-      }
-      checkForLintErrors(editor.value);
+      $('#run').click();
     }
   });
 }
@@ -158,22 +173,22 @@ function setUpTaskbar(editor) {
   var tasks = $('#tasks');
 
   tasks.change(function() {
-    var previous = $(this).data('previous');
+    var current = $(this).data('current');
     var option = $('#tasks option:selected');
     var task = option.data('task');
 
-    if (previous) {
-      localStorage[previous] = editor.value;
+    if (current) {
+      localStorage[current.name] = editor.value;
     }
 
     if (task) {
       editor.value = localStorage[task.name] || task.code;
       $('#description').html(task.description);
-      $(this).data('previous', task.name);
+      $(this).data('current', task);
     }
     else {
       $('#description').html('&nbsp;');
-      $(this).data('previous', null);
+      $(this).data('current', null);
     }
     editor.focus = true;
   });
