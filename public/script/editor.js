@@ -96,6 +96,12 @@ function appendToLog(log, obj, type, line) {
     json.text(JSON.stringify(obj, null, '  '));
     if (obj instanceof Error) {
       element.text(obj + '');
+    } else if (obj instanceof Array) {
+      if (obj.length > 3) {
+        element.text('[' + obj.slice(0, 3).join(', ') + ', ... ]');
+      } else {
+        element.text('[' + obj.join(', ') + ']');
+      }
     } else {
       element.text(Object.prototype.toString.call(obj));
     }
