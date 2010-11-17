@@ -119,23 +119,58 @@ function appendToLog(log, obj, type, line) {
   log.scrollTop(log[0].scrollHeight);
 }
 
+function createSandbox(globals) {
+  /* Inspired by http://dean.edwards.name/weblog/2006/11/sandbox/ */
+  var iframe = document.createElement("iframe");
+  iframe.style.display = "none";
+  document.body.appendChild(iframe);
+
+  frames[frames.length - 1].document.write(
+    "<script>"+
+    "parent.sandbox={"+
+    "eval: function(s){return eval(s)},"+
+    "addGlobal: function(key, func) { window[key] = func }}"+
+    "<\/script>"
+  );
+
+  var sandbox = window.sandbox;
+  delete window.sandbox;
+
+  for (var key in globals) {
+    sandbox.addGlobal(key, globals[key]);
+  }
+
+  sandbox.destroy = function() {
+    document.body.removeChild(iframe)
+  };
+
+  return sandbox;
+}
+
+
 function setUpEvaluation(editor) {
   $('#clear').click(function() {
     console.clear();
   });
 
   $('#run').click(function() {
-    var start = new Date().getTime();
+    var sandbox = createSandbox({
+      console: console,
+      assert: assert,
+      iter: iter
+    });
+
+    var started = new Date().getTime(), finished = null;
     try {
-      // FIXME eval in iframe?
-      // FIXME complain about new globals
-      eval('(function(){' + editor.value + '\n})()');
+      sandbox.eval(editor.value);
     } catch(err) {
       // FIXME extract line number from err via stack or lineNumber
       console.error(err);
+    } finally {
+      finished = new Date().getTime();
+      sandbox.destroy();
     }
-    var end = new Date().getTime();
-    console.info('Code excuted in ' + (end - start) + 'ms at ' + new Date());
+    console.log('Finished in ' + (finished - started) + 'ms');
     checkForLintErrors(editor.value);
   });
 
