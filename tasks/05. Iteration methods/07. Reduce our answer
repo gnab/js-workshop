@@ -2,16 +2,17 @@ Now lets see if we can accumulate an answer...
 --
 var data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-function reduce(array, func, initial) {
-  var accumelator = initial;
-  iter.forEach(array, function(element, index, array) {
-    accumelator = func(accumelator, element, index, array);
-  });
-  return accumelator;
-}
-
 function multiply(previousValue, currentValue, index, array) {
   return previousValue * currentValue;
+}
+
+// The reduce function needs to keep track of an accumulator which is the
+// return value from the callback. The callback should be called in the current
+// accumulator, the current value, index and array like the other iterator
+// methods.
+
+function reduce(array, func, initial) {
+
 }
 
 var result = reduce(data, multiply, 1);

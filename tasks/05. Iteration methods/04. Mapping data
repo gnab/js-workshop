@@ -2,12 +2,11 @@ Find the square root of all the elements using map()
 --
 var data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
+// Implment the map function so that it returns a new array with all the
+// results from the func calls.
+
 function map(array, func) {
-  var res = [];
-  iter.forEach(array, function(element, index, array) {
-    res.push(func(element, index, array));
-  });
-  return res;
+
 }
 
 var result = map(data, Math.sqrt);

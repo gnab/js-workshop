@@ -1,11 +1,13 @@
 Write a basic functional fibonaci in JS :)
 --
 
+// Feel free to skip this one if you feel you have done it enough times before
+// :)
+
+// Implement a fibonaci function using basic functional programing.
+
 function fib(n) {
-  if (n <= 1) {
-    return n;
-  }
-  return fib(n-1) + fib(n-2);
+
 }
 
 assert(fib(1) == 1, 'fib(1) != 1');

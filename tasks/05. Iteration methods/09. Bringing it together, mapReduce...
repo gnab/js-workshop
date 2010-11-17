@@ -1,4 +1,4 @@
-Now lets try and combine these techniques
+Now lets try and combine these techniques...
 --
 var text = "";
 text += "Lorem ipsum dolor sit amet consectetur adipiscing elit Etiam euismod ipsum a";
@@ -13,15 +13,30 @@ text += "massa lectus consequat erat eget bibendum nunc nibh eu sapien";
 
 var words = text.split(' ');
 
-var mapped = iter.map(words, function(element, index, array) {
-  return [element.length, 1];
-});
+// For this task we want to count the occurrence of words of various lengths.
+//
+// Step 1: Generate key value pairs for the problem we are solving.
+//         Normally this is spread across multiple machines, but for the sake
+//         of simplicity we will only use one "node". Mapped should contain:
+//         [[5, 'Lorem'], [5, 'ipsum'], [4, 'dolor'], ...]
 
-var grouped = iter.groupBy(mapped);
+var mapped = iter.map( );
 
-iter.forEach(grouped, function(element, index, array) {
-  var result = iter.reduce(element, function(previousValue, currentValue, index, array) {
-    return previousValue + currentValue;
-  }, 0);
-  console.log('Words of length ' + index + ': ' + result);
-});
+// Step 2: Group the list of key value pairs by their key.
+//         By using an array as an initial value we should be able to group our
+//         results in a hash with array values. We could also use a dedicated
+//         groupBy function to perfom such a task. Grouped should contain:
+//         {5: ['Lorem', 'ipsum', ...], 4: ['dolor', ...], ...}
+
+var grouped = iter.reduce(mapped, function(previousValue, currentValue, index, array) {
+
+}, {});
+
+// Step 3: Reduce each group into an answer to your problem.
+//         Normally this task would also be distributed, but as this is a single
+//         "node" we will need to do all of them our selves.
+
+for (var key in grouped) {
+  var count = iter.reduce(  )
+  console.log('Words of length ' + key + ': ' + count);
+}
