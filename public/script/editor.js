@@ -89,7 +89,11 @@ function appendToLog(log, obj, type, line) {
   if (type) {
     element.addClass(type);
   }
-  if (typeof(obj) != 'object') {
+  if (typeof(obj) === 'undefined') {
+    element.text('undefined');
+  } else if (obj === null) {
+    element.text('null');
+  } else if (typeof(obj) != 'object') {
     element.text(obj);
   } else {
     var json = $('<pre />');
