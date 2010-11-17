@@ -1,0 +1,19 @@
+Now lets see if we can accumulate an answer...
+--
+var data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+function reduce(array, func, initial) {
+  var accumelator = initial;
+  iter.forEach(array, function(element, index, array) {
+    accumelator = func(accumelator, element, index, array);
+  });
+  return accumelator;
+}
+
+function multiply(previousValue, currentValue, index, array) {
+  return previousValue * currentValue;
+}
+
+var result = reduce(data, multiply, 1);
+
+assert(result === 3628800, result);

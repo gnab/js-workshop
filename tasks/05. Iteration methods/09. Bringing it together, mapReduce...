@@ -1,0 +1,27 @@
+Now lets try and combine these techniques
+--
+var text = "";
+text += "Lorem ipsum dolor sit amet consectetur adipiscing elit Etiam euismod ipsum a";
+text += "convallis pulvinar dui arcu scelerisque mauris luctus consectetur felis lectus";
+text += "sit amet purus In hendrerit ligula at venenatis viverra ipsum dolor tincidunt";
+text += "nulla a cursus ipsum sem id felis Nunc pretium aliquam nisi a molestie";
+text += "Pellentesque laoreet malesuada arcu Nullam tempor dignissim lobortis";
+text += "Suspendisse sed mi augue eu imperdiet orci Cras auctor odio id augue aliquet";
+text += "suscipit Pellentesque laoreet elementum mauris non ullamcorper Sed ac urna";
+text += "vitae eros semper molestie Donec consectetur nunc euismod vehicula adipiscing";
+text += "massa lectus consequat erat eget bibendum nunc nibh eu sapien";
+
+var words = text.split(' ');
+
+var mapped = iter.map(words, function(element, index, array) {
+  return [element.length, 1];
+});
+
+var grouped = iter.groupBy(mapped);
+
+iter.forEach(grouped, function(element, index, array) {
+  var result = iter.reduce(element, function(previousValue, currentValue, index, array) {
+    return previousValue + currentValue;
+  }, 0);
+  console.log('Words of length ' + index + ': ' + result);
+});

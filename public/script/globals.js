@@ -1,7 +1,7 @@
 var iter = {
   forEach: function (list, func) {
-    for (var i = 0; i < list.length; i++) {
-      func(list[i], i, list);
+    for (var key in list) {
+      func(list[key], key, list);
     }
   },
   filter: function(list, func) {
@@ -26,5 +26,23 @@ var iter = {
       res = res && func(element, index, list);
     });
     return res;
+  },
+  reduce: function(list, func, initial) {
+    var accumelator = initial;
+    this.forEach(list, function(element, index, list) {
+      accumelator = func(accumelator, element, index, list);
+    });
+    return accumelator;
+  },
+  groupBy: function(list, keyFunc, valFunc) {
+    var groups = {};
+    iter.forEach(list, function(element, index, list) {
+      var key = element[0];
+      if (!groups[key]) {
+        groups[key] = [];
+      }
+      groups[key].push(element[1]);
+    });
+    return groups;
   }
 }
