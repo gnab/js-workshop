@@ -279,8 +279,10 @@ function updateLayout() {
 
 function checkForLintErrors(code) {
   lintconsole.clear()
+  var options = '/*jslint devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, newcap: true, immed: true */';
+  var global = '/*global assert: true, iter: true */';
 
-  if (!JSLINT(code)) {
+  if (!JSLINT(options + global + code)) {
     for (var i = 0; i < JSLINT.errors.length; i++) {
       var lint = JSLINT.errors[i];
         lintconsole.error(lint.id + ' ' + lint.reason, lint.line);
