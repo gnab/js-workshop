@@ -20,11 +20,13 @@ var words = text.split(' ');
 //         of simplicity we will only use one "node". Mapped should contain:
 //         [[5, 'Lorem'], [5, 'ipsum'], [4, 'dolor'], ...]
 
-var mapped = iter.map( );
+var mapped = iter.map(words, function(element, index, array) {
+
+});
 
 // Step 2: Group the list of key value pairs by their key.
-//         By using an array as an initial value we should be able to group our
-//         results in a hash with array values. We could also use a dedicated
+//         By using an hash as an initial value we should be able to group our
+//         results in it with array values. We could also use a dedicated
 //         groupBy function to perfom such a task. Grouped should contain:
 //         {5: ['Lorem', 'ipsum', ...], 4: ['dolor', ...], ...}
 
