@@ -89,7 +89,11 @@ function appendToLog(log, obj, type, line) {
   if (type) {
     element.addClass(type);
   }
-  if (typeof(obj) != 'object') {
+  if (typeof(obj) === 'undefined') {
+    element.text('undefined');
+  } else if (obj === null) {
+    element.text('null');
+  } else if (typeof(obj) != 'object') {
     element.text(obj);
   } else {
     var json = $('<pre />');
@@ -119,23 +123,58 @@ function appendToLog(log, obj, type, line) {
   log.scrollTop(log[0].scrollHeight);
 }
 
+function createSandbox(globals) {
+  /* Inspired by http://dean.edwards.name/weblog/2006/11/sandbox/ */
+  var iframe = document.createElement("iframe");
+  iframe.style.display = "none";
+  document.body.appendChild(iframe);
+
+  frames[frames.length - 1].document.write(
+    "<script>"+
+    "parent.sandbox={"+
+    "eval: function(s){return eval(s)},"+
+    "addGlobal: function(key, func) { window[key] = func }}"+
+    "<\/script>"
+  );
+
+  var sandbox = window.sandbox;
+  delete window.sandbox;
+
+  for (var key in globals) {
+    sandbox.addGlobal(key, globals[key]);
+  }
+
+  sandbox.destroy = function() {
+    document.body.removeChild(iframe)
+  };
+
+  return sandbox;
+}
+
+
 function setUpEvaluation(editor) {
   $('#clear').click(function() {
     console.clear();
   });
 
   $('#run').click(function() {
-    var start = new Date().getTime();
+    var sandbox = createSandbox({
+      console: console,
+      assert: assert,
+      iter: iter
+    });
+
+    var started = new Date().getTime(), finished = null;
     try {
-      // FIXME eval in iframe?
-      // FIXME complain about new globals
-      eval('(function(){' + editor.value + '\n})()');
+      sandbox.eval(editor.value);
     } catch(err) {
       // FIXME extract line number from err via stack or lineNumber
       console.error(err);
+    } finally {
+      finished = new Date().getTime();
+      sandbox.destroy();
     }
-    var end = new Date().getTime();
-    console.info('Code excuted in ' + (end - start) + 'ms at ' + new Date());
+    console.log('Finished in ' + (finished - started) + 'ms');
     checkForLintErrors(editor.value);
   });
 
@@ -244,8 +283,10 @@ function updateLayout() {
 
 function checkForLintErrors(code) {
   lintconsole.clear()
+  var options = '/*jslint devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, newcap: true, immed: true */';
+  var global = '/*global assert: true, iter: true */';
 
-  if (!JSLINT(code)) {
+  if (!JSLINT(options + global + code)) {
     for (var i = 0; i < JSLINT.errors.length; i++) {
       var lint = JSLINT.errors[i];
         lintconsole.error(lint.id + ' ' + lint.reason, lint.line);
