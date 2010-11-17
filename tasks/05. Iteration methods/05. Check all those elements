@@ -1,9 +1,7 @@
 --
-var forEach = globals.forEach;
-
 function every(array, func) {
   var res = true;
-  forEach(array, function(element, index, array) {
+  iter.forEach(array, function(element, index, array) {
     res = res && func(element, index, array);
   });
   return res;
