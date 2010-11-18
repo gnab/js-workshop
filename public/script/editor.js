@@ -32,7 +32,7 @@ function setUpLog(editor) {
   var log = $('#log');
   var lintlog = $('#lint');
 
-  if (typeof(console) !== 'undefined') {
+  if (typeof(console) === 'undefined') {
     console = {};
   }
 
