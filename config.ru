@@ -16,7 +16,9 @@ get '/tasks.js' do
       collect { |text| text.strip }[0..1]
 
     sections[section][:tasks].push({
-      :name => task, :description => description, :code => code
+      :name => task, 
+      :description => description || '', 
+      :code => code || ''
     })
     sections
   }.values.sort_by {|section| section[:name] })
