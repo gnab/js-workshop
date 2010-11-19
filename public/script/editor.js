@@ -172,7 +172,7 @@ function setUpEvaluation(editor) {
       console.error(err);
     } finally {
       finished = new Date().getTime();
-      sandbox.destroy();
+      //sandbox.destroy();
     }
     console.log('Finished in ' + (finished - started) + 'ms');
     checkForLintErrors(editor.value);
@@ -284,7 +284,7 @@ function updateLayout() {
 function checkForLintErrors(code) {
   lintconsole.clear()
   var options = '/*jslint devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, newcap: true, immed: true */';
-  var global = '/*global assert: true, iter: true */';
+  var global = '/*global assert: true, iter: true, setTimeout: true */';
 
   if (!JSLINT(options + global + code)) {
     for (var i = 0; i < JSLINT.errors.length; i++) {
