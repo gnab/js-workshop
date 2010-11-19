@@ -6,7 +6,7 @@ for (var i = 0; i < 100; i++) {
 }
 
 function sumEqualProduct(element, index, array) {
-  var parts = (value + "").split("", 2);
+  var parts = (element + "").split("", 2);
   var first = parseInt(parts[0], 10);
   var second = parseInt(parts[1], 10);
   return first+second == first*second;
@@ -17,7 +17,7 @@ function sumEqualProduct(element, index, array) {
 
 function some(array, func) {
 
-});
+}
 
 console.log(some(data, sumEqualProduct));
 
