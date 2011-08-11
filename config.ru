@@ -4,7 +4,7 @@ require 'json'
 mime_type :less, 'text/css'
 
 get '/' do
-  redirect '/index.html'
+  File.new('public/index.html').readlines
 end
 
 get '/tasks.js' do
