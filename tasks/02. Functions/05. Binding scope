@@ -1,4 +1,4 @@
-Complete the function times, so that it can create functions that will return the next number in the sequence of numbers divisible by n for each subsequent call.
+Make the function times return a function that returns the next multiple of n for each subsequent call.
 --
 var times = function (n) {
 

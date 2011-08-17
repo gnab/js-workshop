@@ -6,7 +6,7 @@ function isOdd(element, index, array) {
   return element % 2 == 1;
 }
 
-// Implment filter so that it returns an array with all the array elements that
+// Implement filter so that it returns an array with all the array elements that
 // func returned true for.
 
 function filter(array, func) {

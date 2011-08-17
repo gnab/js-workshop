@@ -1,4 +1,4 @@
-Make the following code log the sequence of numbers 0-4 in two ways; (1) by refactoring the setTimeout call out into its own function (2) and by changing setTimeout's anonymous function argument into a function that runs immediately and returns a function used as setTimeout's first argument
+Log numbers 0-4 in two ways: (1) by extracting the setTimeout call, (2) by wrapping the anon. function in a function run immediately to bind variable i
 --
 var i;
 for (i = 0; i < 5; i++) {

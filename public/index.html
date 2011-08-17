@@ -1,27 +1,42 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link id="bespin_base" href="/script/bespin/" />
-    <script src="/script/bespin/BespinEmbedded.js"></script>
-    <script src="/script/fulljslint.js"></script>
-    <script src="/script/jquery-1.4.3.min.js"></script>
-    <script src="/script/globals.js"></script>
-    <script src="/script/editor.js"></script>
-    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <link rel="stylesheet" type="text/css" href="/css/editor.css" />
+    <link rel="stylesheet" type="text/css" href="/css/chosen.css" />
+    <link href="http://fonts.googleapis.com/css?family=Amaranth" rel="stylesheet" type="text/css">
+    <title>editorjs</title>
   </head>
   <body>
-    <div id="taskbar">
-      Tasks:
-      <select id="tasks"></select>
-      <button id="run">Run code</button>
-      <button id="reset">Reset task</button>
-      <button id="clear">Clear console</button>
-      <div id="description">&nbsp;</div>
+    <div id="header">
+      <a id="logo" href="/">editor<span class="js">js</span></a>
+      <select id="tasks" data-placeholder="Choose a task..."></select>
+      <div class="chzn-container chzn-container-single">
+        <a id="run" href="#" class="chzn-single button">Run code</a>
+        <a id="reset" href="#" class="chzn-single button">Reset task</a>
+        <a id="clear" href="#" class="chzn-single button">Clear console</a>
+      </div>
+    </div>
+    <div id="description" class="header">
+      Choose a task in the drop down list to get started!
     </div>
     <div id="editor"></div>
-    <div id="console">
-      <div id="lint"></div>
-      <div id="log"></div>
+    <div id="sidebar">
+      <div id="log">
+        <div class="header">Console</div>
+        <div class="content"></div>
+      </div>
+      <div id="lint">
+        <div class="header">JSLint</div>
+        <div class="content"></div>
+      </div>
     </div>
+    <script src="/js/ace/ace.js"></script>
+    <script src="/js/ace/theme-textmate.js"></script>
+    <script src="/js/ace/mode-javascript.js"></script>
+    <script src="/js/fulljslint.js"></script>
+    <script src="/js/jquery-1.4.3.min.js"></script>
+    <script src="/js/chosen.jquery.min.js"></script>
+    <script src="/js/globals.js"></script>
+    <script src="/js/editor.js"></script>
   </body>
 </html>

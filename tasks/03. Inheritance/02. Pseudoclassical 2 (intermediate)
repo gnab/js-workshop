@@ -1,4 +1,4 @@
-Every Car can honk, using a shared honk method, but Hondas cannot! Try to fix this so that new Hondas will share Cars honk method, utilizing Hondas prototype property! 
+Hondas cannot honk! Try to fix this so that new Hondas will share Car's honk method, utilizing Hondas prototype property! 
 --
 function Car () {}
 Car.prototype.honk = function () {
