@@ -198,6 +198,19 @@
     });
   }
 
+  function checkForLintErrors(code) {
+    lintconsole.clear()
+    var options = '/*jslint devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, newcap: true, immed: true */';
+    var global = '/*global assert: true, iter: true, setTimeout: true */';
+
+    if (!JSLINT(options + global + code)) {
+      for (var i = 0; i < JSLINT.errors.length; i++) {
+        var lint = JSLINT.errors[i];
+          lintconsole.error(lint.id + ' ' + lint.reason, lint.line);
+      }
+    }
+  }
+
   function saveCurrentTask() {
     var task = $('#tasks').data('current');
     if (task) {
@@ -250,6 +263,14 @@
     });
   }
 
+  function setUpChangeLineNumber(editor) {
+    $('#sidebar .line').live('click', function() {
+      var line = $(this).text().match(/(\d+)/)[0];
+      editor.gotoLine(parseInt(line));
+      editor.focus();
+    });
+  }
+
   var editor = setUpEditor();
   setUpLog();
   setUpEvaluation(editor);
@@ -261,26 +282,5 @@
 function assert (expr, msg) {
   if (expr !== true) {
     throw new Error(msg || 'Assertion failed!');
-  }
-}
-
-function setUpChangeLineNumber(editor) {
-  $('#sidebar .line').live('click', function() {
-    var line = $(this).text().match(/(\d+)/)[0];
-    editor.gotoLine(parseInt(line));
-    editor.focus();
-  });
-}
-
-function checkForLintErrors(code) {
-  lintconsole.clear()
-  var options = '/*jslint devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, newcap: true, immed: true */';
-  var global = '/*global assert: true, iter: true, setTimeout: true */';
-
-  if (!JSLINT(options + global + code)) {
-    for (var i = 0; i < JSLINT.errors.length; i++) {
-      var lint = JSLINT.errors[i];
-        lintconsole.error(lint.id + ' ' + lint.reason, lint.line);
-    }
   }
 }
