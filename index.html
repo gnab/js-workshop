@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>JavaScript: The Good Parts</title>
+    <script src="slideit.js" type="text/javascript"></script>
+    <link href="slideit.css" rel="stylesheet" type="text/css" />
+    <style type="text/css" media="screen">
+      a {
+        color: #800;
+      }
+      .task {
+        float: right;
+        font-size: 0.9em;
+        padding-top: 0.6em;
+      }
+      .task a {
+        color: #080;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <pre id="content">
+.center.middle
+
+# JavaScript: The Good Parts
+
+---
+
+# Agenda
+
+- Introduction
+
+- The Book
+
+- JavaScript crash course and hands-on
+  - Object Literals
+  - Functions
+  - Inheritance
+
+---
+
+# The Book
+
+Short, exclusively about JavaScript.
+
+"_Intended for programmers venturing into JavaScript for the first time_"
+
+"_... also indented for programmers who have been working with JavaScript at a novice level, and are now ready for a more sophisticated relationshop with the language_"
+
+"_This is not a book for beginners_"
+
+"_This is not a book for dummies_"
+
+---
+.center.middle
+
+# http://editorjs.heroku.com
+### (http://github.com/gnab/editorjs)
+
+---
+.center.middle
+
+# Object Literals
+
+---
+
+.task[[#01 Object properties](http://editorjs.heroku.com/)]
+
+## Object Literals
+# Objects
+
+A collection of key-value properties.
+
+    var obj = {
+      key1: 'value1',
+      key2: 13
+    };
+
+    obj.key1;         // 'value1'
+    obj['key2'];      // 13
+    obj.key3;         // undefined
+
+    delete obj.key1;
+    obj.key1;         // undefined
+
+---
+
+.task[[#02 Populating arrays](http://editorjs.heroku.com/)]
+
+## Object Literals
+# Arrays
+
+A collection of indexed properties.
+
+    var arr = [1, 2, 3];
+
+    arr.push(4);
+
+    arr[1];         // 2
+    arr[4] = 5;
+    arr.length;     // 5
+
+---
+
+.task[[#03 What have you got?](http://editorjs.heroku.com/)]
+
+## Object Literals
+# Objects vs. Arrays (1/2)
+
+Arrays are not "real":
+
+- Objects in disguise
+- Operations are slow when number of elements are large
+
+` `
+
+    var obj = [1, 2, 3];
+    obj.speed = 5;
+
+    obj[1];         // 2
+    obj.speed       // 5
+    obj['speed'];   // 5
+
+    obj.length;     // 3
+
+---
+
+## Object Literals
+# Objects vs. Arrays (2/2)
+
+The `for (... in ...)` loops all properties of an object.
+
+    var obj = [1, 2, 3];
+    obj.speed = 5;
+
+    var i;
+    for (i = 0; i < obj.length; ++i) {
+      obj[i];  // 1, 2, 3
+    }
+
+    var key;
+    for (key in obj) {
+      obj[key];  // 1, 2, 3, 5
+    }
+
+---
+
+.task[[#04 Who are you?](http://editorjs.heroku.com/)]
+
+## Object Literals
+# Types
+
+Go figure.
+
+    new Object();       // {}
+    new Array();        // []
+    new Number(1);      // 1
+    new Boolean(true);  // true
+
+    typeof {};          // 'object'
+    typeof [];          // 'object'     WTF?
+    typeof 1;           // 'number'
+    typeof '';          // 'string'
+    typeof true;        // 'boolean'
+
+    typeof null;        // 'object'     WTF?
+
+---
+.center.middle
+
+# Functions
+
+---
+
+## Functions
+# You name it
+
+    function () {}
+
+    function add (a, b) {
+      return a + b;
+    }
+
+    var multiply = function (a, b) {
+      return a * b;
+    }
+
+    var recur = function rec (num) {
+      if (num > 0) { rec(num--); }
+      return num;
+    }
+
+---
+
+.task[[#01 How many arguments do you have?](http://editorjs.heroku.com/)]
+
+## Functions
+# `arguments`
+
+All functions can access their
+
+- `arguments`
+  - `length`
+  - `callee`
+
+` `
+
+    function countArgs () {
+      return arguments.length;
+    }
+
+    countArgs();              // 0
+    countArgs('one');         // 1
+    countArgs('one', 'two');  // 2
+
+---
+
+.task[[#02 Higher order functions](http://editorjs.heroku.com/)<br /> [#03 Variables by reference](http://editorjs.heroku.com)]
+
+## Functions
+# First order variables
+
+- Functions can return functions
+- Functions can take functions as an argument
+
+` `
+
+    function createFunction () {
+      return function () {
+
+      };
+    }
+
+    var anonymous = createFunction();
+    anonymous();  // undefined
+
+---
+
+.task[[#04 JavaScript pwns your scope](http://editorjs.heroku.com/)]
+
+## Functions
+# Scope (1/2)
+
+JavaScript has __function scope__, not block scope.
+
+    function () {
+      i;  // undefined    WTF?
+
+      for (var i = 0; i < 10; i++) {
+
+      }
+
+      i;  // 10
+    }
+
+---
+
+## Functions 
+# Scope (2/2)
+
+Variable declarations towards the top, please!
+
+    function () {
+      var i;
+
+      for (i = 0; i < 10; i++) {
+
+      }
+
+      i;  // 10
+    }
+
+---
+
+## Functions 
+# More on scope (1/3)
+
+Functions can access everything from their outer scope.
+
+    var a = 1;
+
+    function doSomething () {
+      a;  // 1
+
+      function doMore () {
+        a;  // 1
+      }
+    }
+
+---
+
+## Functions
+# More on scope (2/3)
+
+Not the other way around.
+
+    function doSomething () {
+      var b = 1;
+
+      function doMore () {
+        b;  // 1
+      } 
+    }
+
+    b;  // undefined
+
+---
+
+## Functions
+# More on scope (3/3)
+
+Forgot the __`var`__? You've got yourself a global!
+
+    function doSomething () {
+      c = 1;
+
+      function doMore () {
+        c;  // 1
+      }
+    }
+
+    c;  // 1
+
+---
+
+.task[[#05 Binding scope](http://editorjs.heroku.com/)]
+
+## Functions
+# Closures (1/2)
+
+Functions can bind scope, even after their outer function has returned!
+
+    var counter = function () {
+      var i = 0;
+
+      return function () {
+        return i++;
+      }
+    };
+
+    var inc = counter();
+    inc();  // 0
+    inc();  // 1
+
+---
+
+.task[[#06 Globally ugly, privately slow, closingly sweet](http://editorjs.heroku.com/)]
+
+## Functions
+# Closures (2/2)
+
+Functions can run immediatly!
+
+    var inc = function () {
+      var i = 0;
+
+      return function () {
+        return i++;
+      }
+    }();  // Note the trailing ()!
+
+    inc();  // 0
+    inc();  // 1
+
+---
+
+## Functions
+# Context
+
+- Functions run in different contexts
+  - Depending on how they are invoced
+
+- May be invoked in 4 primary ways
+  - Function invocation
+  - Constructor invocation
+  - Method invocation
+  - `apply`/`call` invocation
+
+---
+
+.task[[#07 What is this?](http://editorjs.heroku.com/)]
+
+## Functions
+# Function invocation
+
+Functions called directly.
+
+    var countArgs = function () {
+      // this === window
+
+      return arguments.length;
+    };
+
+    countArgs();  // 0
+
+---
+
+.task[[#08 Constructing objects](http://editorjs.heroku.com/)]
+
+## Functions
+# Constructor invocation (1/2)
+
+Functions called with the __`new`__ keyword.
+
+    function Person (name) {
+      // this === instance of Person
+
+      this.name = name;
+    }
+
+    var bob = new Person('bob');
+    var ed = new Person('ed');
+
+---
+
+## Functions
+# Constructor invocation (2/2)
+
+But there's a gotcha!
+
+    function Person (name) {
+      this.name = name;
+    }
+
+    var bob = Person('bob');
+    var ed = new Person('ed');
+
+    window.name === 'bob'  // true    WTF?
+
+---
+
+.task[[#09 Context confusion](http://editorjs.heroku.com/)]
+
+## Functions
+# Method invocation
+
+Functions called on objects.
+
+    var obj = {
+      value: 1,
+      getValue: function () {
+        // this === obj
+
+        return this.value;
+      }
+    };
+
+    obj.getValue()  // 1
+
+---
+
+.task[[#10 Is this yours?](http://editorjs.heroku.com/)]
+
+## Functions
+#  `apply`/`call` invocation
+
+Applying functions to objects.
+
+    function doStuff () {
+      return this.speed;
+    }
+
+    var obj = { speed: 2 };
+
+    doStuff.apply(obj, [arg1, arg2]);
+
+    doStuff.call(obj, arg1, arg2);
+
+---
+.center.middle
+
+# Inheritance
+
+---
+
+## Inheritance
+# Multiple paradigms
+
+- Pseudoclassical inheritance
+
+- Prototypal/differential inheritance
+
+- Functional inheritance
+
+---
+
+## Inheritance
+# Prototype (1/3)
+
+- All objects inherit from their `prototype`
+
+- Inherit directly from objects
+  - Properties
+  - Methods
+
+- Bound upon object creation
+
+` `
+
+    var obj = {};
+    obj.toString();  // '[object Object]'
+
+---
+
+## Inheritance
+# Prototype (2/3)
+
+The `prototype` property.
+
+    function Object () {}
+
+    Object.prototype = {
+      toString: function () {
+        return '[object Object]';
+      }
+    };
+
+    var obj = new Object();
+    obj.toString();  // '[object Object]'
+
+---
+
+## Inheritance
+# Prototype (3/3)
+
+    var obj = new Object();
+    obj.x = 1;
+    // obj.__proto__ = Object.prototype;
+
+## TODO: Prototypebilde
+
+(http://dmitrysoshnikov.com/ecmascript/javascript-the-core/)
+
+---
+
+.task[[#01 Pseudoclassical 1](http://editorjs.heroku.com/)]
+
+## Inheritance
+# Pseudoclassical inheritance (1/2)
+
+## TODO: Prototypekjedebilde
+
+    function CoolObject (x) {
+      this.x = x;
+    }
+
+    CoolObject.prototype = {
+      getX : function () {
+        return this.x;
+      }
+    };
+
+    var coolObj = new CoolObject(1);
+
+---
+
+.task[[#02 Pseudoclassical 2](http://editorjs.heroku.com/)]
+
+## Inheritance
+# Pseudoclassical inheritance (2/2)
+
+- Intented to look object oriented - looks quite alien?
+
+- Remember to use __`new`__!
+ - Clobbering global variables
+ - No compile warling, no runtime warning
+ - Convention - all constructor functions start with an capital letter
+
+"_Comfort to unexperienced JavaScript programmers_"  
+"_Induce unnecessary complex hierarcies_"  
+"_... motivated by constraints of static type checking_"
+
+__JavaScript has more and better options__
+
+---
+
+.task[[#03 Prototypal](http://editorjs.heroku.com/)]
+
+## Inheritance
+# Prototypal/differential inheritance
+
+- Dispence with classes, make useful objects
+- Specify differences
+
+` `
+
+    function create (proto) {
+      function F () {};
+      F.prototype = proto;
+      return new F();
+    }
+
+    var utilities = {
+      uberMethod: function () {}
+    };
+
+    var obj = create(utilities);
+    obj.uberMethod();
+
+---
+
+.task[[#04 Functional](http://editorjs.heroku.com/)]
+
+## Inheritance
+# Functional inheritance
+
+    var person = function (spec, shared) {
+      var that = {};
+
+      // shared.persons++;
+
+      that.getName = function () {
+        return spec.name;
+      };
+
+      return that;
+    };
+
+    var bob = person({name: 'bob'});
+    var ed = person({name: 'ed'});
+
+---
+
+## Inheritance
+# Module pattern
+
+    var lib = {};
+    lib.module = (function () {
+
+      var privateVariable;
+
+      var privateFunction = function () {};
+
+      return {
+        publicProperty: 1,
+        privilegedMethod: function (arg) {
+          // privateVariable = arg;
+        }
+      };
+
+    })();
+
+---
+.center.middle
+
+# Bad Parts
+
+---
+
+## Bad Parts
+# Arrays
+
+Indices are free to go.
+
+    var arr = [1, 2, 3];
+    arr[999] = 0; // WTF
+    arr.length;   // 1000
+
+    delete arr[1];
+    arr; // [1, undefined, 3];
+
+---
+
+## Bad Parts
+# `for (... in ...)` 
+
+Properties from the `prototype` chain are looped as well.
+
+    var key;
+
+    for (key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        // Property belongs to obj itself
+      }
+    }
+
+---
+
+## Bad Parts
+# `eval` is evil
+
+Property look-ups.
+
+    // Don't do
+    eval('var value = obj.' + key);
+
+    // Rather do
+    var value = obj[key];
+
+Function references.
+  
+    // Don't do
+    var f = new Function("alert('hello');");
+    setTimeout("alert('hello')", 1000);
+    setInterval("alert('hello')", 1000);
+
+    // Rather do
+    var f = function () { alert('hello'); };
+    setTimeout(f, 1000);
+
+---
+
+## Bad Parts
+# Falsy values
+
+- __`false`__
+- __`null`__
+- __`undefined`__
+- Empty string; `''` or `""`
+- Zero; `0`
+- Not-a-number, e.g. 'a' / 2; __`NaN`__
+
+` `
+
+- `&&` and `||` return the actual value of the expession that stops the evaluation
+
+          function Car (name) {
+            this.name = name || 'default name';
+          }
+
+---
+
+## Bad Parts
+# Transitivity - come again?
+
+    0 == '0'            // true
+    0 == ''             // true
+    '' == '0'           // false
+
+    false == 'false'    // false
+    false == '0'        // true
+
+    undefined == false  // false
+    undefined == true   // false
+    false == null       // false
+    null == undefined   // true
+
+    ' \t\r\n ' == 0     // true
+
+---
+
+## Bad Parts
+# Semicolon insertion (1/2)
+
+    function getStatus () {
+      return
+      {
+        status: true
+      }
+    }
+
+---
+
+## Bad Parts
+# Semicolon insertion (2/2)
+
+    function getStatus () {
+      return;
+      {
+        status: true
+      }
+    }
+
+---
+
+## Bad Parts
+# `arguments` is not an array
+
+It only pretends to be.
+
+    {
+      '0': 1,
+      '1': 2
+    }
+
+But you can fix it.
+
+    function f () {
+      var slice = Array.prototype.slice;
+      return slice.apply(arguments);
+    }
+
+    f(1, 2);  // [1, 2]
+
+---
+
+## Bad Parts
+# Keywords
+
+    obj[&lt;keyword&gt;] = 1  // Reserved word
+
+- `abstract`  
+- __`boolean`__ __`break`__ `byte`  
+- __`case`__ __`catch`__ `char` `class` `const` __`continue`__
+- __`debugger`__ __`default`__ __`delete`__ `do` `double`
+- __`else`__ `enum` `export` `extends`
+- __`false`__ `final` __`finally`__ `float` __`for`__ __`function`__
+- `goto`
+- __`if`__ `implements` `import` __`in`__ __`instanceof`__ `int` `interface`
+- `long`
+- `native` __`new`__ __`null`__
+- `package` `private` `protected` `public`
+- __`return`__
+- `short` `static` `super` __`switch`__ `synchronized`
+- __`this`__ __`throw`__ `throws` `transient` __`true`__ __`try`__ __`typeof`__
+- __`var`__ `volatile` __`void`__
+- __`while`__ __`with`__
+
+---
+
+## Bad Parts
+# Void
+
+- __`void`__ is an operator
+- takes an operand
+- returns __`undefined`__
+
+` `
+
+    void 1  // undefined
+
+    </pre>
+    <div id="presentation"></div>
+  </body>
+</html>
