@@ -2,7 +2,7 @@ Populate the array, please.
 --
 var arr = [];
 var i;                
-for (i = 0; i < 10; i++) {
+for (i = 0; i < 10; i += 1) {
   // ..
 }
                          
