@@ -155,12 +155,12 @@
     window.onkeydown = function (event) {
       switch (event.keyCode) {
         case 37:
-        case 38:
+        //case 38:
         case 75:
           gotoSlide(currentSlideIndex - 1);
           break;
         case 39:
-        case 40:
+        //case 40:
         case 74:
           gotoSlide(currentSlideIndex + 1);
           break;
