@@ -190,8 +190,8 @@ Go figure.
     }
 
     var recur = function rec (num) {
-      if (num > 0) { rec(num--); }
-      return num;
+      if (num === 0) { return num; }
+      return rec(num - 1);
     }
 
 ---
