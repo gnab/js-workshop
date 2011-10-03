@@ -1,7 +1,8 @@
 html, body {
   background: #d7d7d7;
   font-family: Georgia;
-  font-size: 1.15em;
+  font-size: 20px;
+  overflow: hidden;
 }
 #presentation {
   background: #fff;
@@ -24,8 +25,15 @@ pre code {
   background: transparent !important;
   border-left: 0.4em solid #d7d7d7;
   font-family: Monaco, monospace;
-  font-size: 0.8em;
+  font-size: 16px;
   padding: 1em !important;
+}
+code {
+  font-family: Monaco, monospace;
+  font-size: 16px;
+}
+h1 code {
+  font-size: 0.8em;
 }
 
 /* EMBEDDED CSS */

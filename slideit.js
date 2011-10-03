@@ -44,25 +44,40 @@
   };
 
   var formatSlide = function (slide) {
-    var classFinder = /\.(-?[a-z_]+)/ig
-      , firstLine = slide.innerHTML.split(/\n/)[0]
-      , classes = [slide.className]
+    var classFinder = /(\n|^)((\.(-?[a-z_]+))+)(\[(.+)\])?/ig
+      , codeFinder = /```((-?[a-z_])+)?\n((\n|.)+?)\n```/ig
+      , classes
+      , replacement
+      , slideClasses = [slide.className]
       , match
-      , i
       ;
 
-    while (match = classFinder.exec(firstLine)) {
-      classes.push(match[1]);
+    while (match = classFinder.exec(slide.innerHTML)) {
+      console.log(match);
+      classes = match[2].substr(1).split('.');
+      if (match[6]) {
+        replacement = "\n\n<span class=\"" + 
+          classes.join(' ') + 
+          "\">" + 
+          match[6] +
+          "</span>\n\n";
+      }
+      else {
+        replacement = "";
+        slideClasses = slideClasses.concat(classes);
+      }
+      slide.innerHTML = slide.innerHTML.substr(0, match.index) +
+        replacement + slide.innerHTML.substr(match.index + match[0].length);
+
+      classFinder.lastIndex = match.index + replacement.length;
     }
 
-    if (classes.length) {
-      slide.innerHTML = slide.innerHTML.substr(firstLine.length);
-      slide.className = classes.join(' ');
+    if (slideClasses.length) {
+      slide.className = slideClasses.join(' ');
     }
 
-    slide.innerHTML = slide.innerHTML.replace(
-        /\.(-?[a-z_]+)\[(.+)\]/ig,
-        "\n\n<span class=\"$1\">$2</span>\n\n");
+    slide.innerHTML = slide.innerHTML.replace(codeFinder, 
+        "<pre><code class=\"$1\">$3</code></pre>");
 
     slide.innerHTML = converter.makeHtml(slide.innerHTML.trim(' '));
     slide.innerHTML = slide.innerHTML.replace(/&amp;/g, '&');
@@ -74,7 +89,7 @@
   };
 
   var stylePresentation = function () {
-    var sizeFactor = 230
+    var sizeFactor = 227
       , presentationWidth = sizeFactor * widthFactor
       , presentationHeight = sizeFactor * heightFactor;
 

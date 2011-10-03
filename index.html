@@ -22,6 +22,9 @@
         float: right;
         margin-left: 1em;
       }
+      .pushdown {
+        margin-top: 12em;
+      }
     </style>
   </head>
   <body>
@@ -40,13 +43,13 @@
 
 Short, exclusively about JavaScript.
 
-"_Intended for programmers venturing into JavaScript for the first time_"
+- "_Intended for programmers venturing into JavaScript for the first time_"
 
-"_... also indented for programmers who have been working with JavaScript at a novice level, and are now ready for a more sophisticated relationship with the language_"
+- "_... also indented for programmers who have been working with JavaScript at a novice level, and are now ready for a more sophisticated relationship with the language_"
 
-"_This is not a book for beginners_"
+- "_This is not a book for beginners_"
 
-"_This is not a book for dummies_"
+- "_This is not a book for dummies_"
 
 ---
 .center.middle
@@ -61,8 +64,8 @@ Short, exclusively about JavaScript.
 
 &nbsp; 
 
-### Code
-#### http://github.com/gnab/editorjs
+# Code
+## http://github.com/gnab/editorjs
 
 ---
 .center.middle
@@ -99,13 +102,15 @@ A collection of key-value properties.
 
 A collection of indexed properties.
 
-    var arr = [1, 2, 3];
+```javascript
+var arr = [1, 2, 3];
 
-    arr.push(4);
+arr.push(4);
 
-    arr[1];         // 2
-    arr[3] = 4;
-    arr.length;     // 4
+arr[1];         // 2
+arr[3] = 4;
+arr.length;     // 4
+```
 
 ---
 
@@ -557,10 +562,12 @@ The `prototype` property.
 ## Inheritance
 # Prototype (3/3)
 
-    var first = new Object();
-    // first.__proto__ = Object.prototype;
+```javascript
+var first = new Object();
+// first.__proto__ = Object.prototype;
 
-    first.x = 1;
+first.x = 1;
+```
 
 ![Prototypal Inheritance 1](prototype1.png)
 
@@ -571,7 +578,7 @@ The `prototype` property.
 ## Inheritance
 # Pseudoclassical inheritance (1/2)
 
-![Prototypal Inheritance 2](prototype2.png)
+.right.pushdown[![Prototypal Inheritance 2](prototype2.png)]
 
     function CoolObject (x) {
       this.x = x;
@@ -665,12 +672,14 @@ __JavaScript has more and better options__
 
 Indices are free to go.
 
-    var arr = [1, 2, 3];
-    arr[999] = 0; // WTF
-    arr.length;   // 1000
+```javascript
+var arr = [1, 2, 3];
+arr[999] = 0; // WTF
+arr.length;   // 1000
 
-    delete arr[1];
-    arr; // [1, undefined, 3];
+delete arr[1];
+arr; // [1, undefined, 3];
+```
 
 ---
 
