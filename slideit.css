@@ -1,6 +1,7 @@
 html, body {
   background: #d7d7d7;
   font-family: Georgia;
+  font-size: 1.15em;
 }
 #presentation {
   background: #fff;
@@ -22,8 +23,8 @@ html, body {
 pre code {
   background: transparent !important;
   border-left: 0.4em solid #d7d7d7;
-  font-family: 'Droid Sans Mono', Monaco, monospace;
-  font-size: 0.9em;
+  font-family: Monaco, monospace;
+  font-size: 0.8em;
   padding: 1em !important;
 }
 

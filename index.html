@@ -18,6 +18,10 @@
         color: #080;
         text-decoration: none;
       }
+      .right {
+        float: right;
+        margin-left: 1em;
+      }
     </style>
   </head>
   <body>
@@ -32,6 +36,7 @@
 
 # The Book
 
+.right[![JavaScript: The Good Parts](thebook.png)]
 
 Short, exclusively about JavaScript.
 
@@ -43,18 +48,21 @@ Short, exclusively about JavaScript.
 
 "_This is not a book for dummies_"
 
-![JavaScript: The Good Parts](thebook.png)
-
 ---
 .center.middle
 
 # Slides 
 ## http://gnab.github.com/editorjs
 
+&nbsp; 
+
 # Editor
 ## http://editorjs.heroku.com
 
-### (Koden: http://github.com/gnab/editorjs)
+&nbsp; 
+
+### Code
+#### http://github.com/gnab/editorjs
 
 ---
 .center.middle
@@ -711,20 +719,19 @@ Function references.
 - __`false`__
 - __`null`__
 - __`undefined`__
-- `0`
-  - zero
-- `''` or `""`
-  - empty string
-- __`NaN`__ 
-  - not-a-number, e.g. 'a' / 2
+- `0` (zero)
+- `''` or `""` (empty string)
+- __`NaN`__ (not-a-number, e.g. 'a' / 2)
 
 ` `
 
 - `&&` and `||` return the actual value of the expession that stops the evaluation
 
-          function Car (name) {
-            this.name = name || 'default name';
-          }
+` `
+
+    function Car (name) {
+      this.name = name || 'default name';
+    }
 
 ---
 
@@ -763,7 +770,7 @@ Function references.
 # Semicolon insertion (2/2)
 
     function getStatus () {
-      return;                            <- semicolon insertion
+      return;                             <- semicolon insertion
       {                                   <- open block
         status: true                      <- loop label
       }                                   <- close block
@@ -798,7 +805,7 @@ But you can fix it.
 ## Bad Parts
 # Keywords
 
-    obj[&lt;keyword&gt;] = 1  // Reserved word                             undefined, NaN, infinity?
+    obj[&lt;keyword&gt;] = 1  // Reserved word                    undefined, NaN, Infinity?
 
 - `abstract`  
 - __`boolean`__ __`break`__ `byte`  

@@ -74,7 +74,7 @@
   };
 
   var stylePresentation = function () {
-    var sizeFactor = 175
+    var sizeFactor = 230
       , presentationWidth = sizeFactor * widthFactor
       , presentationHeight = sizeFactor * heightFactor;
 
@@ -103,32 +103,6 @@
     window.onresize = resize;
     window.onresize();
   }
-
-  var resize2 = function () {
-    var height = window.innerHeight
-      , width = window.innerWidth
-      , zoomFactor
-      ;
-
-    if (width / widthFactor > height / heightFactor) {
-      width = height / heightFactor * widthFactor;
-    }
-    else {
-      height = width / widthFactor * heightFactor;
-    }
-
-    zoomFactor = height / 5;
-
-    presentation.style.left = (window.innerWidth - width) / 2 + 'px';
-    presentation.style.top = (window.innerHeight - height) / 2 + 'px';
-    presentation.style.width = Math.floor(width * 100 / zoomFactor) +
-      'px';
-    presentation.style.height = Math.floor(height * 100 / zoomFactor) +
-      'px';
-
-    presentation.style['-webkit-transform'] = 'scale(' + 
-        zoomFactor / 100 + ')';
-  };
 
   var navigate = function () {
     slideNo = parseInt((location.hash || '').substr(1), 10) || 1;
