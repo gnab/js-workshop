@@ -300,8 +300,9 @@ Not the other way around.
         b;  // 1
       } 
     }
+    doSomething();
 
-    b;  // undefined
+    b;  // ReferenceError
 
 ---
 
@@ -317,6 +318,7 @@ Forgot the __`var`__? You've got yourself a global!
         c;  // 1
       }
     }
+    doSomething();
 
     c;  // 1
 
@@ -325,7 +327,7 @@ Forgot the __`var`__? You've got yourself a global!
 .task[[#05 Binding scope](http://editorjs.heroku.com/)]
 
 ## Functions
-# Closures (1/2)
+# Closures (1/3)
 
 Functions can bind scope, even after their outer function has returned!
 
@@ -334,7 +336,7 @@ Functions can bind scope, even after their outer function has returned!
 
       return function () {
         return i++;
-      }
+      };
     };
 
     var inc = counter();
@@ -346,7 +348,7 @@ Functions can bind scope, even after their outer function has returned!
 .task[[#06 Globally ugly, privately slow, closingly sweet](http://editorjs.heroku.com/)]
 
 ## Functions
-# Closures (2/2)
+# Closures (2/3)
 
 Functions can run immediatly!
 
@@ -355,11 +357,34 @@ Functions can run immediatly!
 
       return function () {
         return i++;
-      }
+      };
     }();  // Note the trailing ()!
 
     inc();  // 0
     inc();  // 1
+
+---
+
+## Functions
+# Closures (3/3)
+
+Create modules with private state!
+
+    var lib = {};
+    lib.module = (function () {
+
+      var privateVariable;
+
+      var privateFunction = function () {};
+
+      return {
+        publicProperty: 1,
+        privilegedMethod: function (arg) {
+          // privateVariable = arg;
+        }
+      };
+
+    })();
 
 ---
 
@@ -409,6 +434,8 @@ Functions called with the __`new`__ keyword.
 
     var bob = new Person('bob');
     var ed = new Person('ed');
+
+    ed.name = 'fred';
 
 ---
 
@@ -461,9 +488,9 @@ Applying functions to objects.
 
     var obj = { speed: 2 };
 
-    doStuff.apply(obj, [arg1, arg2]);
+    doStuff.apply(obj, [arg1, arg2]);  // 2
 
-    doStuff.call(obj, arg1, arg2);
+    doStuff.call(obj, arg1, arg2);     // 2
 
 ---
 .center.middle
@@ -486,11 +513,11 @@ Applying functions to objects.
 ## Inheritance
 # Prototype (1/3)
 
-- All objects inherit from their `prototype`
-
-- Inherit directly from objects
+- Inherit directly from other objects
   - Properties
   - Methods
+
+- All objects inherit from a `prototype` property
 
 - Bound upon object creation
 
@@ -522,9 +549,10 @@ The `prototype` property.
 ## Inheritance
 # Prototype (3/3)
 
-    var obj = new Object();
-    obj.x = 1;
-    // obj.__proto__ = Object.prototype;
+    var first = new Object();
+    // first.__proto__ = Object.prototype;
+
+    first.x = 1;
 
 ![Prototypal Inheritance 1](prototype1.png)
 
@@ -587,12 +615,13 @@ __JavaScript has more and better options__
       return new F();
     }
 
-    var utilities = {
-      uberMethod: function () {}
+    var eventBase = {
+      emit: function () {},
+      on: function () {}
     };
 
-    var obj = create(utilities);
-    obj.uberMethod();
+    var obj = create(eventBase);
+    obj.emit('some event');
 
 ---
 
@@ -615,27 +644,6 @@ __JavaScript has more and better options__
 
     var bob = person({name: 'bob'});
     var ed = person({name: 'ed'});
-
----
-
-## Inheritance
-# Module pattern
-
-    var lib = {};
-    lib.module = (function () {
-
-      var privateVariable;
-
-      var privateFunction = function () {};
-
-      return {
-        publicProperty: 1,
-        privilegedMethod: function (arg) {
-          // privateVariable = arg;
-        }
-      };
-
-    })();
 
 ---
 .center.middle
@@ -703,10 +711,10 @@ Function references.
 - __`false`__
 - __`null`__
 - __`undefined`__
-- `''` or `""`
-  - empty string
 - `0`
   - zero
+- `''` or `""`
+  - empty string
 - __`NaN`__ 
   - not-a-number, e.g. 'a' / 2
 
@@ -746,7 +754,7 @@ Function references.
       return
       {
         status: true
-      }
+      } 
     }
 
 ---
@@ -755,11 +763,14 @@ Function references.
 # Semicolon insertion (2/2)
 
     function getStatus () {
-      return;
-      {
-        status: true
-      }
+      return;                            <- semicolon insertion
+      {                                   <- open block
+        status: true                      <- loop label
+      }                                   <- close block
     }
+
+
+# W T F
 
 ---
 
@@ -787,7 +798,7 @@ But you can fix it.
 ## Bad Parts
 # Keywords
 
-    obj[&lt;keyword&gt;] = 1  // Reserved word
+    obj[&lt;keyword&gt;] = 1  // Reserved word                             undefined, NaN, infinity?
 
 - `abstract`  
 - __`boolean`__ __`break`__ `byte`  
@@ -811,6 +822,8 @@ But you can fix it.
 ## Bad Parts
 # Void
 
+Void is not useful, avoid void!
+
 - __`void`__ is an operator
 - takes an operand
 - returns __`undefined`__
@@ -818,6 +831,7 @@ But you can fix it.
 ` `
 
     void 1  // undefined
+
 
     </pre>
     <div id="presentation"></div>
