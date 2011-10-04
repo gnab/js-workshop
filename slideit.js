@@ -13,6 +13,7 @@
     mapKeys();
     stylePresentation();
     navigate();
+    attachTouchHandlers();
 
     window.onhashchange = navigate;
   };
@@ -157,6 +158,27 @@
     };
   };
 
+  var attachTouchHandlers = function () {
+
+    var touchStartX;
+
+    document.body.ontouchstart = function (e) {
+      var target = e.changedTouches[0];
+      touchStartX = target.clientX;
+    };
+
+    document.body.ontouchend = function (e) {
+      var target = e.changedTouches[0];
+      var x = target.clientX;
+      if (x > touchStartX) {
+        gotoSlide(currentSlideIndex - 1);
+      }
+      else {
+        gotoSlide(currentSlideIndex + 1);
+      }
+    };
+
+  };
   /* EMBEDDED JAVASCRIPT */
 
   /* highlightjs (http://softwaremaniacs.org/soft/highlight/en/) */
