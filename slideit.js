@@ -165,6 +165,7 @@
     document.body.ontouchstart = function (e) {
       var target = e.changedTouches[0];
       touchStartX = target.clientX;
+      e.preventDefault();
     };
 
     document.body.ontouchend = function (e) {
@@ -176,6 +177,7 @@
       else {
         gotoSlide(currentSlideIndex + 1);
       }
+      e.preventDefault();
     };
 
   };
