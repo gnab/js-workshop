@@ -1,4 +1,4 @@
-Make all asserts pass by uncommenting each assert and only changing double dots into variables
+Make all asserts pass by uncommenting each assert and only changing double dots into variables, function calls and typeof-s.
 --
 var a = 1;
 b = 3;
