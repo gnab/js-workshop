@@ -7,4 +7,4 @@ var times = function (n) {
 var times2 = times(2);
 times2(); // 2
 times2(); // 4
-times2(); // 8                  
+times2(); // 6
