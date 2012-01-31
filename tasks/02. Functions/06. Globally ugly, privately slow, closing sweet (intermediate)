@@ -1,8 +1,8 @@
-Create a third variant of the isOneTwoOrThree-methods utilizing javascript's closures; where data is private, the function is fast - it's sweet.
+Create a third variant of the isOneTwoOrThree-methods utilizing JavaScript's closures; where data is private, the function is fast - it's sweet.
 --
 var data = [1, 2, 3];
 var uglyIsOneTwoOrThree = function (n) {
-  return n in data;
+  return data.indexOf(n) != -1;
 };
 assert(uglyIsOneTwoOrThree(1) === true);
 assert(uglyIsOneTwoOrThree(2) === true);
@@ -11,7 +11,7 @@ assert(uglyIsOneTwoOrThree(4) === false);
 
 var slowIsOneTwoOrThree = function (n) {
   var data = [1, 2, 3];
-  return n in data;
+  return data.indexOf(n) != -1;
 };
 assert(slowIsOneTwoOrThree(1) === true);
 assert(slowIsOneTwoOrThree(2) === true);
