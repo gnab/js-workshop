@@ -1,4 +1,4 @@
-Log numbers 0-4 in two ways: (1) by extracting the setTimeout call, (2) by wrapping the anon. function in a function run immediately to bind variable i
+Log numbers 0-4 correctly in by extracting the setTimeout call to bind variable i:
 --
 var i;
 for (i = 0; i < 5; i++) {
