@@ -7,7 +7,7 @@ var uglyIsOneTwoOrThree = function (n) {
 assert(uglyIsOneTwoOrThree(1) === true);
 assert(uglyIsOneTwoOrThree(2) === true);
 assert(uglyIsOneTwoOrThree(4) === false);
-                               
+
 
 var slowIsOneTwoOrThree = function (n) {
   var data = [1, 2, 3];
@@ -16,11 +16,11 @@ var slowIsOneTwoOrThree = function (n) {
 assert(slowIsOneTwoOrThree(1) === true);
 assert(slowIsOneTwoOrThree(2) === true);
 assert(slowIsOneTwoOrThree(4) === false);
-                                        
+
 
 var sweetIsOneTwoOrThree = function () {
 
-}();                                               
+}();
 assert(sweetIsOneTwoOrThree(1) === true);
 assert(sweetIsOneTwoOrThree(2) === true);
 assert(sweetIsOneTwoOrThree(4) === false);

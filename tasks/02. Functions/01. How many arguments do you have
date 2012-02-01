@@ -2,10 +2,10 @@ Complete the sum function, making it sum all arguments, no matter how many you g
 --
 
 function sum () {
-  var s = 0;  
-  
-  return s; 
-}         
+  var s = 0;
+
+  return s;
+}
 
 assert(sum() === 0, 'sum without arguments should be 0');
 assert(sum(1, 2) === 3, 'sum with arguments 1 and 2 should equal 3');
