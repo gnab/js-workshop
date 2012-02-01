@@ -1,11 +1,11 @@
 Populate the array, please.
 --
 var arr = [];
-var i;                
+var i;
 for (i = 0; i < 10; i += 1) {
   // ..
 }
-                         
+
 assert(arr[0] === 0, 'first element should equal 0');
 assert(arr[1] === 1, 'second element should equal 1');
 assert(arr.length === 10, 'array length should be 10');

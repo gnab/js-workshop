@@ -1,9 +1,9 @@
 Set the three properties, in three different ways.
 --
 var person = {
-  
+
 };
-                                       
+
 
 assert(person.name === 'bob', 'name should equal "bob"');
 assert(person.gender === 'male', 'gender should equal "male"');

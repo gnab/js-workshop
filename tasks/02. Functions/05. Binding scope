@@ -2,7 +2,7 @@ Make the function times return a function that returns the next multiple of n fo
 --
 var times = function (n) {
 
-};                                 
+};
 
 var times2 = times(2);
 times2(); // 2

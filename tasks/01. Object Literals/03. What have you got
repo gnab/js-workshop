@@ -6,15 +6,15 @@ function createCopy (original) {
     copy[k] = original[k];
   }
   return copy;
-}            
+}
 
 var a = [];
-a.key = 1;              
+a.key = 1;
 a['key2'] = 1;
 a.push(2);
 
-var b = createCopy(a);       
-          
+var b = createCopy(a);
+
 assert(b[0] === 2, 'element was not copied');
-assert(b.key === 1, 'key was not copied');              
-assert(b['key2'] === 1, 'key2 was not copied');              
+assert(b.key === 1, 'key was not copied');
+assert(b['key2'] === 1, 'key2 was not copied');
