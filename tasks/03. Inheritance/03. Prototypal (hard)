@@ -4,14 +4,14 @@ var utilities = {
   honk: function () {
     console.log('Honk!');
   }
-};                          
+};
 
 var create = function create (prototype) {
   function F () {}
-  // .. 
+  // ..
   return new F();
 };
-                             
+
 var bmw = create(utilities);
 bmw.honk();
 
