@@ -125,11 +125,11 @@
     iframe.style.display = "none";
     document.body.appendChild(iframe);
 
+
     frames[frames.length - 1].document.write(
       "<script>"+
       "parent.sandbox={"+
-      "eval: function(s){return eval(s)},"+
-      "addGlobal: function(key, func) { window[key] = func }}"+
+        "addGlobal: function(key, func) { window[key] = func }}"+
       "<\/script>"
     );
 
@@ -138,6 +138,10 @@
 
     for (var key in globals) {
       sandbox.addGlobal(key, globals[key]);
+    }
+
+    sandbox.evaluate = function (code) {
+      frames[frames.length - 1].document.write("<script>"+code+"<\/script>");
     }
 
     sandbox.destroy = function() {
@@ -163,15 +167,9 @@
         , finished = null
         , value = editor.getSession().getValue();
 
-      try {
-        sandbox.eval(value);
-      } catch(err) {
-        // FIXME extract line number from err via stack or lineNumber
-        console.error(err);
-      } finally {
-        finished = new Date().getTime();
-        //sandbox.destroy();
-      }
+      sandbox.evaluate(value);
+      finished = new Date().getTime();
+
       console.info('Finished in ' + (finished - started) + 'ms');
       checkForLintErrors(value);
     });
@@ -281,6 +279,18 @@
 
 function assert (expr, msg) {
   if (expr !== true) {
-    throw new Error(msg || 'Assertion failed!');
+    var trace = printStackTrace();
+    printLineNumber(trace);
+  }
+  else {
+    console.log(msg + ': ok!');
+  }
+}
+
+function printLineNumber (trace) {
+  var regex = new RegExp('@' + location.href + ':(\\d+)');
+  var match = regex.exec(trace);
+  if (match) {
+    console.log('assert on line ' + match[1] + ' not ok.');
   }
 }
