@@ -277,20 +277,21 @@
 
 }(this);
 
-function assert (expr, msg) {
+var printLineNumber = function (trace) {
+  var regex = new RegExp('@' + location.href + ':(\\d+)');
+  var match = regex.exec(trace);
+  if (match) {
+    console.error('assert on line ' + match[1] + ' not ok.');
+  }
+}
+
+var assert = function (expr, msg) {
   if (expr !== true) {
     var trace = printStackTrace();
     printLineNumber(trace);
   }
   else {
-    console.log(msg + ': ok!');
+    console.log((msg ? msg + ': ' : '') + 'OK!');
   }
 }
 
-function printLineNumber (trace) {
-  var regex = new RegExp('@' + location.href + ':(\\d+)');
-  var match = regex.exec(trace);
-  if (match) {
-    console.log('assert on line ' + match[1] + ' not ok.');
-  }
-}
