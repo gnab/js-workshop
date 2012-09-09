@@ -3,8 +3,8 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>JavaScript: The Good Parts</title>
-    <script src="https://github.com/downloads/gnab/remark/remark-0.3.5.min.js" type="text/javascript">
-      {"highlightLanguage": "javascript"} 
+    <script src="https://github.com/downloads/gnab/remark/remark-0.4.0.min.js" type="text/javascript">
+      {"highlightLanguage": "javascript"}
     </script>
     <style type="text/css" media="screen">
       pre {
@@ -38,7 +38,7 @@
   </head>
   <body>
     <pre id="source">
-.center.middle
+class: center, middle
 
 # JavaScript: The Good Parts
 
@@ -60,27 +60,32 @@ Short, exclusively about JavaScript.
 
 - "_This is not a book for dummies_"
 
+? Crockford som har skrevet både bok og JSLint (luke ut ulumskheter)
+? editorjs - online editor m/ oppgaver, kjøring og linting
+? Fokus kun på språk, ikke rammeverk / arkitektur
+
 ---
-.center.middle
-
-# Slides 
-## [http://gnab.github.com/editorjs](http://gnab.github.com/editorjs)
-
-&nbsp; 
+class: center, middle
 
 # Editor
 ## [http://editorjs.heroku.com](http://editorjs.heroku.com)
 
-&nbsp;  
+&nbsp;
+
+# Slides
+## [http://gnab.github.com/editorjs](http://gnab.github.com/editorjs)
+
+&nbsp;
 
 # Code
 ## [http://github.com/gnab/editorjs](http://github.com/gnab/editorjs)
 
 ---
-.center.middle
+class: center, middle
 
 # Object Literals
 
+? Objekter, arrays og typer
 ---
 
 .task[[#01 Object properties](http://editorjs.heroku.com/)]
@@ -102,6 +107,9 @@ A collection of key-value properties.
     delete obj.key1;
     obj.key1;         // undefined
 
+? Aksess av felter både ved . og []
+? Manglende felt gir undefined, ikke feil
+
 ---
 
 .task[[#02 Populating arrays](http://editorjs.heroku.com/)]
@@ -111,13 +119,17 @@ A collection of key-value properties.
 
 A collection of indexed properties.
 
-    var arr = [1, 2, 3];
+    var arr = [1, "two", 3];
 
     arr.push(4);
 
     arr[1];         // 2
     arr[3] = 4;
     arr.length;     // 4
+
+? Dynamisk størrelse
+? Vilkårlige typer objekter
+? .length
 
 ---
 
@@ -138,6 +150,8 @@ Arrays are not "real":
     obj['speed'];   // 5
 
     obj.length;     // 3
+
+? .length baserer seg på "array" innhold, ikke andre felter
 
 ---
 
@@ -183,8 +197,13 @@ Go figure.
 
     typeof null;        // 'object'     WTF?
 
+? Foretrukket å ikke bruke new (kan utelates og gi feil resultat)
+? typeof [] gir mening, men kan ikke skille typene
+? typeof gir alltid streng
+? typeof må brukes for å sjekke eksistens (men ikke for objektfelter)
+
 ---
-.center.middle
+class: center, middle
 
 # Functions
 
@@ -208,6 +227,11 @@ Go figure.
       return rec(num - 1);
     }
 
+? Function expressions vs statements
+? Hoisting - add tilgjengelig overalt
+? Kan lagre (anonyme) funksjoner i variabler
+? Navngitt funksjon privat ved tilordning (recur / rec)
+
 ---
 
 .task[[#01 How many arguments do you have?](http://editorjs.heroku.com/)]
@@ -215,7 +239,7 @@ Go figure.
 ## Functions
 # `arguments`
 
-All functions can access their
+All functions can access their:
 
 - `arguments`
   - `length`
@@ -229,6 +253,12 @@ All functions can access their
     countArgs();              // 0
     countArgs('one');         // 1
     countArgs('one', 'two');  // 2
+
+? arguments ikke array, men objekt med length-felt
+? callee - funksjonen selv, den som blir kalt
+? Oppgave løses med for, ikke for in
+? Siste definisjon av funksjon med samme navn gjelder
+? Funksjon kan kalles med vilkårlig antall argumenter uavh. av definisjon
 
 ---
 
@@ -252,8 +282,6 @@ All functions can access their
 
 ---
 
-.task[[#04 JavaScript pwns your scope](http://editorjs.heroku.com/)]
-
 ## Functions
 # Scope (1/2)
 
@@ -269,9 +297,11 @@ JavaScript has __function scope__, not block scope.
       i;  // 10
     }
 
+? Uten var i hadde man fått ReferenceError
+
 ---
 
-## Functions 
+## Functions
 # Scope (2/2)
 
 Variable declarations towards the top, please!
@@ -286,9 +316,11 @@ Variable declarations towards the top, please!
       i;  // 10
     }
 
+? Hoisting - skjer implisitt, så greit å gjøre synlig
+
 ---
 
-## Functions 
+## Functions
 # More on scope (1/3)
 
 Functions can access everything from their outer scope.
@@ -315,13 +347,17 @@ Not the other way around.
 
       function doMore () {
         b;  // 1
-      } 
+      }
     }
     doSomething();
 
     b;  // ReferenceError
 
+? Funksjon kan kjøres når expression - vanlig med () rundt for å gjøre til expr.
+
 ---
+
+.task[[#04 JavaScript pwns your scope](http://editorjs.heroku.com/)]
 
 ## Functions
 # More on scope (3/3)
@@ -434,6 +470,8 @@ Functions called directly.
 
     countArgs();  // 0
 
+? I nodejs ville this ikke være window, men exports.
+
 ---
 
 .task[[#09 Constructing objects](http://editorjs.heroku.com/)]
@@ -510,7 +548,7 @@ Applying functions to objects.
     doStuff.call(obj, arg1, arg2);     // 2
 
 ---
-.center.middle
+class: center, middle
 
 # Inheritance
 
@@ -524,6 +562,11 @@ Applying functions to objects.
 - Prototypal/differential inheritance
 
 - Functional inheritance
+
+? Ullent område
+? Mange gjør forskjellig
+? Prøver å etterligne andre språk
+? JavaScript kan tilpasses flere paradigmer
 
 ---
 
@@ -568,7 +611,8 @@ The `prototype` property.
     var first = new Object();
     // first.__proto__ = Object.prototype;
 
-    first.x = 1;
+    first.x = 1;       // on first
+    first.toString();  // on first's prototype (Object)
 
 ![Prototypal Inheritance 1](prototype1.png)
 
@@ -593,6 +637,12 @@ The `prototype` property.
 
     var coolObj = new CoolObject(1);
 
+? Prototype-objektet deles av alle instanser, hvert objekt arver ikke alt
+? Minner om statiske klassevariabler/metoder
+? Kan endre ting på prototypen i etterkant - vil påvirke alle instanser
+? Kan endre prototype for objekt etter opprettelse
+? Husk at = { .. tilsvarere new Object()
+
 ---
 
 .task[[#02 Pseudoclassical 2](http://editorjs.heroku.com/)]
@@ -607,11 +657,14 @@ The `prototype` property.
  - No compile warning, no runtime warning
  - Convention - all constructor functions start with an capital letter
 
-"_Comfort to unexperienced JavaScript programmers_"  
-"_Induce unnecessary complex hierarcies_"  
+"_Comfort to unexperienced JavaScript programmers_"
+"_Induce unnecessary complex hierarcies_"
 "_... motivated by constraints of static type checking_"
 
 __JavaScript has more and better options__
+
+? Bedre å pakke inn new for å unngå å etterligne andre språk
+? Veldig likt obj := Object clone i Io
 
 ---
 
@@ -660,8 +713,10 @@ __JavaScript has more and better options__
     var bob = person({name: 'bob'});
     var ed = person({name: 'ed'});
 
+? Ulempe at alle instanser får egne kopier av funksjoner
+
 ---
-.center.middle
+class: center, middle
 
 # Bad Parts
 
@@ -679,10 +734,12 @@ Indices are free to go.
     delete arr[1];
     arr; // [1, undefined, 3];
 
+? Sletting må gjøres med splice(1,1) (fjern ett element fra posisjon 1)
+
 ---
 
 ## Bad Parts
-# `for (... in ...)` 
+# `for (... in ...)`
 
 Properties from the `prototype` chain are looped as well.
 
@@ -708,7 +765,7 @@ Property look-ups.
     var value = obj[key];
 
 Function references.
-  
+
     // Don't do
     var f = new Function("alert('hello');");
     setTimeout("alert('hello')", 1000);
@@ -731,7 +788,7 @@ Function references.
 - __`NaN`__ (not-a-number, e.g. 'a' / 2)
 
 
-- `&&` and `||` return the actual value of the expession that stops the evaluation
+`&&` and `||` return the actual value of the expession that stops the evaluation:
 
 
     function Car (name) {
@@ -766,7 +823,7 @@ Function references.
       return
       {
         status: true
-      } 
+      }
     }
 
 ---
@@ -793,13 +850,14 @@ It only pretends to be.
 
     {
       '0': 1,
-      '1': 2
+      '1': 2,
+      length: 2
     }
 
 But you can fix it.
 
     function f () {
-      var slice = Array.prototype.slice;
+      var slice = Array.prototype.slice; // [].slice
       return slice.apply(arguments);
     }
 
@@ -812,8 +870,8 @@ But you can fix it.
 
     obj[&lt;keyword&gt;] = 1  // Reserved word (undefined, NaN, Infinity?)
 
-- `abstract`  
-- __`boolean`__ __`break`__ `byte`  
+- `abstract`
+- __`boolean`__ __`break`__ `byte`
 - __`case`__ __`catch`__ `char` `class` `const` __`continue`__
 - __`debugger`__ __`default`__ __`delete`__ `do` `double`
 - __`else`__ `enum` `export` `extends`
@@ -832,7 +890,7 @@ But you can fix it.
 ---
 
 ## Bad Parts
-# Void
+# Avoid `void`
 
 Void is not useful, avoid void!
 
@@ -845,12 +903,16 @@ Void is not useful, avoid void!
     void 1  // undefined
 
 ---
-.center.middle
+class: center, middle
 # That's all folks!
 
-Slideshow created with [remark](http://github.com/gnab/remark).
+Slideshow created with [remark](http://gnab.github.com/remark).
 
     </pre>
     <div id="slideshow"></div>
+    <script type="text/javascript">
+      var source = document.getElementById('source');
+      source.innerHTML = source.innerHTML.replace(/^\?.+\n/gm, '\n');
+    </script>
   </body>
 </html>
