@@ -197,7 +197,7 @@
   }
 
   function checkForLintErrors(code) {
-    lintconsole.clear()
+    lintconsole.clear();
     var options = '/*jslint devel: true, undef: true, nomen: true, eqeqeq: true, plusplus: true, bitwise: true, regexp: true, newcap: true, immed: true */';
     var global = '/*global assert: true, iter: true, setTimeout: true, window: true */';
 
@@ -237,6 +237,8 @@
         $(this).data('current', null);
       }
       editor.focus();
+      lintconsole.clear();
+      console.clear();
     });
 
     $.getJSON('/tasks.js', function(sections) {
