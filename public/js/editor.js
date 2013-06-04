@@ -298,18 +298,19 @@
 
 }(this);
 
-var printLineNumber = function (trace) {
-  var regex = new RegExp('@' + location.href + ':(\\d+)');
+var printLineNumber = function (trace, msg) {
+  var regex = new RegExp('(?:@| {4}at )' + location.href + ':(\\d+)');
   var match = regex.exec(trace);
   if (match) {
-    console.error('assert on line ' + match[1] + ' not ok.');
+    console.error('Assert on line ' + match[1] + ' failed' +
+        (msg ? ': ' + msg : '.'));
   }
 }
 
 var assert = function (expr, msg) {
   if (expr !== true) {
     var trace = printStackTrace();
-    printLineNumber(trace);
+    printLineNumber(trace, msg);
   }
   else {
     console.log((msg ? msg + ': ' : '') + 'OK!');
