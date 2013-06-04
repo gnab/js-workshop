@@ -186,12 +186,13 @@
       saveCurrentTask();
     });
 
-    $(document).keyup(function(e) {
+    $(document).keydown(function(e) {
       if (e.ctrlKey && e.keyCode === 13) {
         if (e.shiftKey) {
           $('#clear').click();
         }
         $('#run').click();
+        e.stopPropagation();
       }
     });
   }
