@@ -192,7 +192,7 @@
           $('#clear').click();
         }
         $('#run').click();
-        e.stopPropagation();
+        e.preventDefault();
       }
     });
   }
