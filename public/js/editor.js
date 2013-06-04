@@ -234,11 +234,11 @@
       if (task) {
         editor.getSession().setValue(localStorage[task.name] || task.code);
         $('#description').html(task.description);
-        $(this).data('current', task);
+        tasks.data('current', task);
       }
       else {
         $('#description').html('&nbsp;');
-        $(this).data('current', null);
+        tasks.data('current', null);
       }
       editor.focus();
       lintconsole.clear();
