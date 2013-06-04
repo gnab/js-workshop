@@ -223,6 +223,10 @@
 
     tasks.change(function() {
       var option = $('#tasks option:selected');
+      gotoTask(option);
+    });
+
+    function gotoTask (option) {
       var task = option.data('task');
 
       saveCurrentTask();
@@ -239,7 +243,7 @@
       editor.focus();
       lintconsole.clear();
       console.clear();
-    });
+    }
 
     $.getJSON('/tasks.js', function(sections) {
       tasks.empty();
@@ -259,8 +263,23 @@
         sectionTag.appendTo(tasks);
       });
 
+      navigateToTaskByHash();
       tasks.trigger("liszt:updated");
     });
+
+    function navigateToTaskByHash() {
+      var cap, sectionNo, taskNo, section, task;
+      if (cap = /^#(\d+)\/(\d+)$/.exec(window.location.hash)) {
+        sectionNo = parseInt(cap[1], 10);
+        taskNo = parseInt(cap[2], 10);
+
+        section = tasks.find('optgroup')[sectionNo - 1];
+        task = section && $(section).find('option')[taskNo - 1];
+
+        task && gotoTask($(task));
+        $(task).attr('selected', 'selected');
+      }
+    }
   }
 
   function setUpChangeLineNumber(editor) {
