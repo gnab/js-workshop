@@ -546,7 +546,7 @@ Applying functions to objects.
 
     var obj = { speed: 2 };
 
-    doStuff.apply(obj, [arg1, arg2]);  // 2
+    doStuff.apply(obj, [ arg1, arg2 ]);  // 2
 
     doStuff.call(obj, arg1, arg2);     // 2
 
@@ -693,24 +693,38 @@ task: [#03 Prototypal](http://js-workshop.herokuapp.com/#3/3)
 ---
 task: [#04 Functional](http://js-workshop.herokuapp.com/#3/4)
 
-# Functional inheritance
+# Functional inheritance (1/2)
 
-    var person = function (spec, shared) {
+    var person = function (options) {
       var that = {};
 
-      // shared.persons++;
-
       that.getName = function () {
-        return spec.name;
+        return options.name;
       };
 
       return that;
     };
 
-    var bob = person({name: 'bob'});
-    var ed = person({name: 'ed'});
+    var bob = person({ name: 'bob' });
+    var ed = person({ name: 'ed' });
 
 ? Ulempe at alle instanser får egne kopier av funksjoner
+
+---
+
+# Functional inheritance (2/2)
+
+    function Car (options) {
+
+      this.getColor = function () {
+        return options.color;
+      };
+    }
+
+    Car.proto...
+
+    var car = new Car({ color: 'red' });
+    car.getColor(); // 'red'
 
 ---
 layout: false
