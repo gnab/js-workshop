@@ -20,11 +20,11 @@ var s = 1;
   }
 
   assert( .. === 2);
-  // assert( .. === 4);
   // assert( .. === 3);
+  // assert( .. === 4);
   // assert( .. === 1);
-  // assert( .. === 2);
   // assert( .. === 7);
+  // assert( .. === 2);
 
 })();
 
@@ -32,5 +32,5 @@ var s = 1;
 // assert( .. === 4);
 // assert( .. === 'undefined');
 // assert( .. === 1);
-// assert( .. === 1);
 // assert( .. === 'undefined');
+// assert( .. === 1);
