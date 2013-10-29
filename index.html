@@ -3,9 +3,7 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>JavaScript: The Good Parts</title>
-    <script src="http://gnab.github.io/remark/downloads/remark-0.4.6.min.js" type="text/javascript">
-      {"highlightLanguage": "javascript"}
-    </script>
+    <script src="http://gnab.github.io/remark/downloads/remark-0.5.9.min.js" type="text/javascript"> </script>
     <style type="text/css" media="screen">
       @import url(http://fonts.googleapis.com/css?family=Droid+Serif);
       @import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
@@ -60,7 +58,7 @@
     </style>
   </head>
   <body>
-    <pre id="source">
+    <textarea id="source">
 class: center, middle, inverse
 
 # JavaScript: The Good Parts
@@ -83,9 +81,12 @@ Short, exclusively about JavaScript.
 
 - "_This is not a book for dummies_"
 
-? Crockford som har skrevet både bok og JSLint (luke ut ulumskheter)
-? editorjs - online editor m/ oppgaver, kjøring og linting
-? Fokus kun på språk, ikke rammeverk / arkitektur
+
+???
+
+- Crockford som har skrevet både bok og JSLint (luke ut ulumskheter)
+- editorjs - online editor m/ oppgaver, kjøring og linting
+- Fokus kun på språk, ikke rammeverk / arkitektur
 
 ---
 class: center, middle
@@ -111,7 +112,9 @@ class: center, middle, inverse
 
 # Object Literals
 
-? Objekter, arrays og typer
+???
+
+Objekter, arrays og typer
 ---
 template: default
 layout: true
@@ -137,8 +140,10 @@ A collection of key-value properties.
     delete obj.key1;
     obj.key1;         // undefined
 
-? Aksess av felter både ved . og []
-? Manglende felt gir undefined, ikke feil
+???
+
+- Aksess av felter både ved . og []
+- Manglende felt gir undefined, ikke feil
 
 ---
 task: [#02 Populating arrays](http://js-workshop.herokuapp.com/#1/2)
@@ -155,9 +160,11 @@ A collection of indexed properties.
     arr[3] = 4;
     arr.length;     // 4
 
-? Dynamisk størrelse
-? Vilkårlige typer objekter
-? .length
+???
+
+- Dynamisk størrelse
+- Vilkårlige typer objekter
+- .length
 
 ---
 
@@ -178,7 +185,9 @@ Arrays are not "real":
 
     obj.length;     // 3
 
-? .length baserer seg på "array" innhold, ikke andre felter
+???
+
+.length baserer seg på "array" innhold, ikke andre felter
 
 ---
 task: [#03 What have you got?](http://js-workshop.herokuapp.com/#1/3)
@@ -220,10 +229,12 @@ Go figure.
 
     typeof null;        // 'object'     WTF?
 
-? Foretrukket å ikke bruke new (kan utelates og gi feil resultat)
-? typeof [] gir mening, men kan ikke skille typene
-? typeof gir alltid streng
-? typeof må brukes for å sjekke eksistens (men ikke for objektfelter)
+???
+
+- Foretrukket å ikke bruke new (kan utelates og gi feil resultat)
+- typeof [] gir mening, men kan ikke skille typene
+- typeof gir alltid streng
+- typeof må brukes for å sjekke eksistens (men ikke for objektfelter)
 
 ---
 layout: false
@@ -255,10 +266,12 @@ layout: true
       return rec(num - 1);
     };
 
-? Function expressions vs statements
-? Hoisting - add tilgjengelig overalt
-? Kan lagre (anonyme) funksjoner i variabler
-? Navngitt funksjon privat ved tilordning (recur / rec)
+???
+
+- Function expressions vs statements
+- Hoisting - add tilgjengelig overalt
+- Kan lagre (anonyme) funksjoner i variabler
+- Navngitt funksjon privat ved tilordning (recur / rec)
 
 ---
 task: [#01 How many arguments do you have?](http://js-workshop.herokuapp.com/#2/1)
@@ -280,11 +293,13 @@ All functions can access their:
     countArgs('one');         // 1
     countArgs('one', 'two');  // 2
 
-? arguments ikke array, men objekt med length-felt
-? callee - funksjonen selv, den som blir kalt
-? Oppgave løses med for, ikke for in
-? Siste definisjon av funksjon med samme navn gjelder
-? Funksjon kan kalles med vilkårlig antall argumenter uavh. av definisjon
+???
+
+- arguments ikke array, men objekt med length-felt
+- callee - funksjonen selv, den som blir kalt
+- Oppgave løses med for, ikke for in
+- Siste definisjon av funksjon med samme navn gjelder
+- Funksjon kan kalles med vilkårlig antall argumenter uavh. av definisjon
 
 ---
 task: [#02 Higher order functions](http://js-workshop.herokuapp.com/#2/2)
@@ -320,7 +335,9 @@ JavaScript has __function scope__, not block scope.
       i;  // 10
     }
 
-? Uten var i hadde man fått ReferenceError
+???
+
+Uten var i hadde man fått ReferenceError
 
 ---
 
@@ -338,7 +355,9 @@ Variable declarations towards the top, please!
       i;  // 10
     }
 
-? Hoisting - skjer implisitt, så greit å gjøre synlig
+???
+
+Hoisting - skjer implisitt, så greit å gjøre synlig
 
 ---
 
@@ -373,7 +392,9 @@ Not the other way around.
 
     b;  // ReferenceError
 
-? Funksjon kan kjøres når expression - vanlig med () rundt for å gjøre til expr.
+???
+
+Funksjon kan kjøres når expression - vanlig med () rundt for å gjøre til expr.
 
 ---
 task: [#03 JavaScript pwns your scope](http://js-workshop.herokuapp.com/#2/3)
@@ -480,7 +501,9 @@ Functions called directly.
 
     countArgs();  // 0
 
-? I nodejs ville this ikke være window, men exports.
+???
+
+I nodejs ville this ikke være window, men exports.
 
 ---
 task: [#09 Constructing objects](http://js-workshop.herokuapp.com/#2/9)
@@ -571,10 +594,12 @@ template: default
 
 - Functional inheritance
 
-? Ullent område
-? Mange gjør forskjellig
-? Prøver å etterligne andre språk
-? JavaScript kan tilpasses flere paradigmer
+???
+
+- Ullent område
+- Mange gjør forskjellig
+- Prøver å etterligne andre språk
+- JavaScript kan tilpasses flere paradigmer
 
 ---
 
@@ -640,11 +665,13 @@ task: [#01 Pseudoclassical 1](http://js-workshop.herokuapp.com/#3/1)
 
     var coolObj = new CoolObject(1);
 
-? Prototype-objektet deles av alle instanser, hvert objekt arver ikke alt
-? Minner om statiske klassevariabler/metoder
-? Kan endre ting på prototypen i etterkant - vil påvirke alle instanser
-? Kan endre prototype for objekt etter opprettelse
-? Husk at = { .. tilsvarere new Object()
+???
+
+- Prototype-objektet deles av alle instanser, hvert objekt arver ikke alt
+- Minner om statiske klassevariabler/metoder
+- Kan endre ting på prototypen i etterkant - vil påvirke alle instanser
+- Kan endre prototype for objekt etter opprettelse
+- Husk at = { .. tilsvarere new Object()
 
 ---
 task: [#02 Pseudoclassical 2](http://js-workshop.herokuapp.com/#3/2)
@@ -664,8 +691,10 @@ task: [#02 Pseudoclassical 2](http://js-workshop.herokuapp.com/#3/2)
 
 __JavaScript has more and better options__
 
-? Bedre å pakke inn new for å unngå å etterligne andre språk
-? Veldig likt obj := Object clone i Io
+???
+
+- Bedre å pakke inn new for å unngå å etterligne andre språk
+- Veldig likt obj := Object clone i Io
 
 ---
 task: [#03 Prototypal](http://js-workshop.herokuapp.com/#3/3)
@@ -708,7 +737,9 @@ task: [#04 Functional](http://js-workshop.herokuapp.com/#3/4)
     var bob = person({ name: 'bob' });
     var ed = person({ name: 'ed' });
 
-? Ulempe at alle instanser får egne kopier av funksjoner
+???
+
+Ulempe at alle instanser får egne kopier av funksjoner
 
 ---
 
@@ -750,7 +781,9 @@ Indices are free to go.
     delete arr[1];
     arr; // [1, undefined, 3];
 
-? Sletting må gjøres med splice(1,1) (fjern ett element fra posisjon 1)
+???
+
+Sletting må gjøres med splice(1,1) (fjern ett element fra posisjon 1)
 
 ---
 
@@ -917,11 +950,9 @@ class: center, middle, inverse
 
 Slideshow created with [remark](http://gnab.github.com/remark).
 
-    </pre>
-    <div id="slideshow"></div>
-    <script type="text/javascript">
-      var source = document.getElementById('source');
-      source.innerHTML = source.innerHTML.replace(/^\?.+\n/gm, '\n');
+    </textarea>
+    <script>
+      var slideshow = remark.create({ highlightLanguage: 'javascript'});
     </script>
   </body>
 </html>
