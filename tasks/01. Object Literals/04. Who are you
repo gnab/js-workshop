@@ -1,4 +1,4 @@
-Make the doubleMe function return the value doubled for numbers and the string repeated twice for strings.
+Make the doubleMe function return the argument type followed by the value doubled for numbers and the string repeated twice for strings.
 --
 function doubleMe (val) {
 
